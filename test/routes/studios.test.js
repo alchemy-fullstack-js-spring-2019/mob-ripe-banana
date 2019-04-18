@@ -57,4 +57,20 @@ describe('studio routes', () => {
       });
   });
 
+  it('can get a studio by id', () => {
+    return Studio.create({
+      name: 'Warner Bros'
+    })
+      .then(createdStudio => {
+        return request(app)
+          .get(`/studios/${createdStudio._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Warner Bros',
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
