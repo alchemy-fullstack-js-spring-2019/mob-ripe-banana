@@ -67,6 +67,29 @@ describe('actors routes', () => {
         });
       });
   });
+
+  it('can update actor by id', () => {
+    return Actor.create({
+      name: 'Warner Bros'
+    })
+      .then(createdActor => {
+        return Promise.all([
+          Promise.resolve(createdActor),
+          request(app)
+            .put(`/actors/${createdActor._id}`)
+            .send({
+              name: 'Tina'
+            })
+        ]);
+      })
+      .then(([actor, updatedActor]) => {
+        expect(updatedActor.body).toEqual({
+          name: 'Tina',
+          _id: actor._id.toString()
+        });
+      });
+  });
+
   it('can delete a actor by ID', () => {
     return Actor.create({
       name: 'Warner Bros'
