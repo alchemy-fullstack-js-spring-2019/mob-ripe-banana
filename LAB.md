@@ -1,5 +1,4 @@
-Ripe Banana
-===
+# Ripe Banana
 
 ## Description
 
@@ -11,25 +10,26 @@ For this assignment, you'll be creating a database of movie films (with reviews)
 1. Start with the entities/resources that don't depend on other resources: `Studio`, `Actor`, and `Reviewer`
 1. Work in groups of up to 4
 1. Those of you in groups of 4 need to be careful about three people around one computer.
-Unless you work together at a fast pace, split up the work (but split it vertically!).
-You need to set a good pace to get through the work in the allotted time.
+   Unless you work together at a fast pace, split up the work (but split it vertically!).
+   You need to set a good pace to get through the work in the allotted time.
 
 ### Entities/Resources
 
-* Studio
-* Film
-* Actor
-* Reviewer
-* Review
+- Studio
+- Film
+- Actor
+- Reviewer
+- Review
 
 #### Entity Relationships
 
 ![image](https://user-images.githubusercontent.com/478864/42962816-50e54248-8b47-11e8-9d3d-6c73a4b162e9.png)
 
 #### Directions Key
-* `<...>` is a placeholder for actual data.
-* `S` = string, `D` = date, `N` = number, `I` = ObjectId
-* Properties marked with `R` are required.
+
+- `<...>` is a placeholder for actual data.
+- `S` = string, `D` = date, `N` = number, `I` = ObjectId
+- Properties marked with `R` are required.
 
 #### Studio
 
@@ -77,7 +77,6 @@ You need to set a good pace to get through the work in the allotted time.
 }
 ```
 
-
 #### Review
 
 ```
@@ -92,7 +91,6 @@ You need to set a good pace to get through the work in the allotted time.
 
 // *Use mongoose timestamp feature
 ```
-
 
 ### Routes
 
@@ -182,8 +180,6 @@ While the schemas should look like the data definitions above, these are descrip
 }]
 ```
 
-
-
 #### POST/PUT
 
 Studio, Films, and Actors, Reviewers and Reviews can be added.
@@ -196,12 +192,12 @@ Studio, Films, and Actors can be deleted. **However**, studios cannot be deleted
 
 ## Testing
 
-* Unit tests for models
-* E2E API tests
+- Unit tests for models
+- E2E API tests
 
 ## Rubric:
 
-* Models: 5pts
-* Relationships: 5pts
-* Routes: 5pts
-* Project Organization and Testing: 5pts
+- Models: 5pts
+- Relationships: 5pts
+- Routes: 5pts
+- Project Organization and Testing: 5pts
