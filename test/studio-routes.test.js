@@ -88,4 +88,30 @@ describe('Studio routes tests', () => {
         });
       });
   });
+  it('deletes a studio', () => {
+    return request(app)
+      .post('/api/v1/studios')
+      .send({
+        name: 'Cobra Kai Studios',
+        address: {
+          city: 'Los Angeles',
+          state: 'CA',
+          country: 'USA'
+        }
+      })
+      .then(res => request(app)
+        .delete(`/api/v1/studios/${res.body._id}`)
+      )
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Cobra Kai Studios',
+          address: {
+            city: 'Los Angeles',
+            state: 'CA',
+            country: 'USA'
+          },
+          _id: expect.any(String),
+        });
+      });
+  });
 });
