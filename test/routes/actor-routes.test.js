@@ -35,4 +35,18 @@ describe('Actor routes tests', () => {
         });
       });
   });
+
+  it('finds all actors', () => {
+    return request(app)
+      .post('/api/v1/actors')
+      .send({
+        name: 'Charlie Sheen',
+        dob: new Date('9/3/1965'),
+        pob: 'New York City'
+      })
+      .then(() => request(app).get('/api/v1/actors'))
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
