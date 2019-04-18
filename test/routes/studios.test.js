@@ -41,9 +41,19 @@ describe('studio routes', () => {
                     __v: 0
                 });
             });
-
     });
 
+    it('returns list of all studios', () => {
+        return Studio
+            .create(sampleStudio)
+            .then(() => {
+                return request(app)
+                    .get('/api/v1/studios');
+            })
+            .then(res => {
+                expect(res.body).toHaveLength(1);
+            });
+    });
 
 });
 
