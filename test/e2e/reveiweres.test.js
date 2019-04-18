@@ -57,4 +57,19 @@ describe('reviewers crud', () =>{
       });
   });
 
+  it('get reviewer by id', () => {
+    return createReviewer()
+      .then(reviewer => {
+        return request(app)
+          .get(`/api/v1/reviewers/${reviewer._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: expect.any(String),
+          company: expect.any(String),
+          _id: expect.any(String),
+        });
+      });
+  });
+
 });
