@@ -72,4 +72,22 @@ describe('reviewers crud', () =>{
       });
   });
 
+  it('can update a reviwer by id', () => {
+    return createReviewer()
+      .then(reviewer => {
+        return request(app)
+          .put(`/api/v1/reviewers/${reviewer._id}`)
+          .send({       
+            name: 'geragld',
+            company: 'capitalism' });
+      })
+      .then(result => {
+        expect(result.body).toEqual({
+          name: 'geragld',
+          company: 'capitalism',
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
