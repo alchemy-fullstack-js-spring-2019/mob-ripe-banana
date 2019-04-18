@@ -1,4 +1,3 @@
-const request = require('supertest');
 const Studio = require('../../lib/models/Studio');
 const mongoose = require('mongoose');
 
