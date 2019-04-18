@@ -74,9 +74,22 @@ describe('studio routes', () => {
               _id: expect.any(String)
             });
           });
-      });
+      });   
+  });
 
-          
+  it('deletes studio by id', () => {
+    return getStudio()
+      .then(createdStudio => {
+        return request(app)
+          .delete(`/api/v1/studios/${createdStudio._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'StudioOne',
+          address: { state: expect.any(String), city: expect.any(String), country: expect.any(String) },
+          _id: expect.any(String)
+        });
+      });
   });
 
 });
