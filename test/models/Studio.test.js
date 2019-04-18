@@ -22,6 +22,7 @@ describe('Studio Model Tests', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
+  
   it('requires a name field', () => {
     const studio = new Studio({
       address: {
