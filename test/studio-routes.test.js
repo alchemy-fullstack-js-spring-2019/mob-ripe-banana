@@ -61,4 +61,31 @@ describe('Studio routes tests', () => {
         expect(res.body).toEqual(expect.any(Array));
       });
   });
+
+  it('gets a studio by id', () => {
+    return request(app)
+      .post('/api/v1/studios')
+      .send({
+        name: 'Cobra Kai Studios',
+        address: {
+          city: 'Los Angeles',
+          state: 'CA',
+          country: 'USA'
+        }
+      })
+      .then(res => request(app)
+        .get(`/api/v1/studios/${res.body._id}`)
+      )
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Cobra Kai Studios',
+          address: {
+            city: 'Los Angeles',
+            state: 'CA',
+            country: 'USA'
+          },
+          _id: expect.any(String),
+        });
+      });
+  });
 });
