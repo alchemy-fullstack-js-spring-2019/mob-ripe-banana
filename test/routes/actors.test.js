@@ -1,7 +1,7 @@
 const request = require('supertest');
-const app = require('../lib/app');
-const Actor = require('../lib/Models/Actor');
-require('./data-helpers');
+const app = require('../../lib/app');
+const Actor = require('../../lib/Models/Actor');
+require('../data-helpers');
 
 describe('actor routes', () => {
   const date = new Date;
@@ -86,8 +86,6 @@ describe('actor routes', () => {
               pob: 'korea',
               _id: expect.any(String) });
           });
-
       });
   });
-
 });
