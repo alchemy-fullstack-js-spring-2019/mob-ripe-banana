@@ -1,22 +1,12 @@
 require('dotenv').config();
-const { getStudios } = require('../dataHelpers');
+const { getStudio } = require('../dataHelpers');
 const request = require('supertest');
-const mongoose = require('mongoose');
-const connect = require('../../lib/utils/connect');
+// const mongoose = require('mongoose');
+require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
 describe('studio routes', () => {
-  beforeAll(() => {
-    return connect();
-  });
-  
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-  
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
+
   it('can create a new studio', () => {
     return request(app)
       .post('/api/v1/studios')
@@ -43,7 +33,29 @@ describe('studio routes', () => {
   });
 
   it('gets a list of studios', () => {
-    
+    return request(app)
+      .get('/api/v1/studios')
+      .then(res => {
+        expect(res.body).toHaveLength(5);
+      });
+  });
+
+  it('gets a studio by id', () => {
+    return getStudio()
+      .then(createdStudio => {
+        return Promise.all([
+          Promise.resolve(createdStudio),
+          request(app)
+            .get(`/api/v1/studios/${createdStudio._id}`)
+        ]);
+      })
+      .then(([studio, res]) => {
+        expect(res.body).toEqual({
+          _id: studio._id,
+          name: studio.name,
+          address: expect.any(Object)
+        });
+      });
   });
 
 });

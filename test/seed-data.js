@@ -4,9 +4,11 @@ const Studio = require('../lib/models/Studio');
 module.exports = ({ studioCount = 5 } = {}) => {
   const studios = [...Array(studioCount)].map(() => ({
     name: 'Studio',
-    city: chance.city(),
-    state: chance.state(),
-    country: chance.country()
+    address: {
+      city: chance.city(),
+      state: chance.state(),
+      country: chance.country()
+    }
   }));
 
   return Studio
