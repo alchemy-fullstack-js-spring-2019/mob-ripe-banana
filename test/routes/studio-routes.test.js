@@ -1,8 +1,8 @@
 require('dotenv').config();
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../lib/app');
-const connect = require('../lib/utils/connect');
+const app = require('../../lib/app');
+const connect = require('../../lib/utils/connect');
 
 describe('Studio routes tests', () => {
   beforeAll(() => {
