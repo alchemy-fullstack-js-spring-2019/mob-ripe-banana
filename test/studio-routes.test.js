@@ -41,4 +41,24 @@ describe('Studio routes tests', () => {
         });
       });
   });
+
+  it('finds all the studios', () => {
+    return request(app)
+      .post('/api/v1/studios')
+      .send({
+        name: 'Cobra Kai Studios',
+        address: {
+          city: 'Los Angeles',
+          state: 'CA',
+          country: 'USA'
+        }
+      })
+      .then(() => request(app)
+        .get('/api/v1/studios')
+      )
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body).toEqual(expect.any(Array));
+      });
+  });
 });
