@@ -1,12 +1,8 @@
 require('dotenv').config();
 const app = require('./lib/app');
-const mongoose = require('mongoose');
+const connect = require('./lib/utils/connect');
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-});
+connect();
 
 const PORT = process.env.PORT || 7890;
 
