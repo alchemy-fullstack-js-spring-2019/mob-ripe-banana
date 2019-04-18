@@ -44,6 +44,7 @@ describe('studio routes', () => {
         });
       });
   });
+
   it('can get list a of studios', () => {
     return Studio.create({
       name: 'Warner Bros'
@@ -72,5 +73,21 @@ describe('studio routes', () => {
         });
       });
   });
+  it('can delete a studio by ID', () => {
+    return Studio.create({
+      name: 'Warner Bros'
+    })
+      .then(createdStudio => {
+        return Promise.all([
+          Promise.resolve(createdStudio),
+          request(app)
+            .delete(`/studios/${createdStudio._id}`)
+        ]);
+      })
+      .then(([createdStudio, res]) => {
+        expect(res.body._id).toEqual(createdStudio._id.toString());
+      });
+  });
+
 
 });
