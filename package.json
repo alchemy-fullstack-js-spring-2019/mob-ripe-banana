@@ -1,15 +1,13 @@
 {
   "name": "mob-ripe-banana",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "pretest": "elsint .",
-    "test": "jest --verbose --runInBand",
+    "test": "jest --verbose",
     "test:watch": "npm run test -- --watch",
     "start": "node server.js",
     "start:watch": "nodemon server.js"
@@ -40,5 +38,6 @@
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "description": ""
 }
