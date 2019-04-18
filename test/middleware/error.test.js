@@ -1,4 +1,5 @@
 const errorMiddleware = require('../../lib/middleware/error');
+const notFoundMiddleware = require('../../lib/middleware/not-found');
 
 describe('error middleware', () => {
   it('returns an error', () => {
@@ -10,5 +11,13 @@ describe('error middleware', () => {
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.send).toHaveBeenCalledWith({ error });
+  });
+});
+
+describe('Not found middleware', () => {
+  it('returns not found if its not found', () => {
+    const next = jest.fn();
+    notFoundMiddleware({}, {}, next);
+    expect(next).toHaveBeenCalledWith(expect.any(Error));
   });
 });
