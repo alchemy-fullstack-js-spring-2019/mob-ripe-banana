@@ -33,6 +33,4 @@ describe('Studio schema', () => {
     const errors = studio.validateSync().errors;
     expect(errors.name.message).toBe('Path `name` is required.');
   });
-
-
 });
