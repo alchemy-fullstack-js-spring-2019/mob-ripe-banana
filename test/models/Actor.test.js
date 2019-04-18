@@ -15,5 +15,12 @@ describe('actor model', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
-  
+  it('requires a name', () => {
+    const actor = new Actor({
+      dob: new Date().getMonth(),
+      pob: 'Portland'
+    });
+    const errors = actor.validateSync().errors;
+    expect(errors.name.message).toEqual('Path `name` is required.');
+  });
 });
