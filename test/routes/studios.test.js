@@ -1,6 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../lib/app');
+const Studio = require('../../lib/models/Studio');
 
 describe('studio routes', () => {
   beforeEach(() => {
@@ -43,6 +44,17 @@ describe('studio routes', () => {
         });
       });
   });
-
+  it('can get list a of studios', () => {
+    return Studio.create({
+      name: 'Warner Bros'
+    })
+      .then(() => {
+        return request(app)
+          .get('/studios'); 
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 
 });
