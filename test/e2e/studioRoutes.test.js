@@ -38,8 +38,23 @@ describe('studio routes', () => {
             country: expect.any(String) 
           },
           _id: expect.any(String),
-          __v: 0,
+          __v: 0
         });
+      });
+  });
+
+  it('can get a list of studios', () => {
+    return StudioSchema
+      .create({
+        name: 'StudioOne',
+        address: { state: chance.state(), city: chance.city(), country: chance.country() }
+      })
+      .then(() => {
+        return request(app)
+          .get('/api/v1/studios')
+          .then(studiosList => {
+            expect(studiosList.body).toHaveLength(1);
+          });
       });
   });
 
