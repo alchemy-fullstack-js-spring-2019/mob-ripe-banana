@@ -29,7 +29,7 @@ describe('reviewers crud', () =>{
     return mongoose.connection.close();
   });
 
-  it('can create Reviewr', () => {
+  it('can create Reviewer', () => {
     return request(app)
       .post('/api/v1/reviewers')
       .send({
@@ -45,6 +45,16 @@ describe('reviewers crud', () =>{
         });
       });
   });
-
+    
+  it('get all reviewers', () => {
+    return createReviewer()
+      .then(() => {
+        return request(app)
+          .get('/api/v1/reviewers');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 
 });
