@@ -73,5 +73,21 @@ describe('actor routes', () => {
         });
       });
   });
+  it('find by id and delete', ()=>{
+    return Actor.create(cara)
+      .then(data=>{
+        const id = data._id;
+        return request(app)
+          .delete(`/api/v1/actors/${id}`)
+          .then(deletedActor=>{
+            expect(deletedActor.body).toEqual({ 
+              name: 'cara',
+              dob: date.toISOString(),
+              pob: 'korea',
+              _id: expect.any(String) });
+          });
+
+      });
+  });
 
 });
