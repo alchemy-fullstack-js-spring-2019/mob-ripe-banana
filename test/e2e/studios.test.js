@@ -58,4 +58,18 @@ describe('studio routes', () => {
       });
   });
 
+  it('deletes studio route', () => {
+    return getStudio()
+      .then(createdStudio => {
+        return Promise.all([
+          Promise.resolve(createdStudio._id),
+          request(app)
+            .delete(`/api/v1/studios/${createdStudio._id}`)
+        ]);
+      })
+      .then(([_id, res]) => {
+        expect(res.body).toEqual({ _id });
+      });
+  });
+
 });
