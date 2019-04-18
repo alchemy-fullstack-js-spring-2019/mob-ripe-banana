@@ -20,4 +20,16 @@ describe('studio model', () => {
         state: 'OR' },
       name: 'Warner Brothers' });
   });
+  it('has a required name field', () => {
+    const studio = new Studio({
+      address: {
+        city: 'Portland',
+        state: 'OR',
+        country: 'USA'
+      }
+    });
+    
+    const errors = studio.validateSync().errors;
+    expect(errors.name.message).toEqual('Path `name` is required.');
+  });
 });
