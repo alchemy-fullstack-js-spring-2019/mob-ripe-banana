@@ -66,6 +66,20 @@ describe('studio routes', () => {
                 expect(res.body).toEqual(sampleStudio);
             });
     });
+    it('deletes a studio by id', () => {
+        return Studio
+            .create(sampleStudio)
+            .then(studio => {
+                return Promise.all([
+                    Promise.resolve(studio._id.toString()),
+                    request(app)
+                        .delete(`/api/v1/studios/${studio._id}`)
+                ]);
+            })
+            .then(([_id, res]) => {
+                expect(res.body).toEqual({ _id });
+            });
+    });
 });
 
 
