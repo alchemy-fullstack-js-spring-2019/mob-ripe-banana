@@ -45,4 +45,33 @@ describe('studio routes', () => {
       });
   });
 
+  it('cam get a studio by id and update', () => {
+    return Studio
+      .create(marvel)
+      .then(newStudio => {
+        return request(app)
+          .patch(`/api/v1/studios/${newStudio._id}`)
+          // stretch goal -> dont patch city but pass test
+          .send({ address: { city: newStudio.address.city, state: 'AZ', country: 'US' } });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'marvel',
+          address: { city: 'city', state: 'AZ', country: 'US' },
+          _id: expect.any(String)
+        });
+      });
+  });
+  it('delete studio by id', ()=>{
+    return Studio 
+      .create(marvel)
+      .then((studioToDelete)=>{
+        const id = studioToDelete._id;
+        return request(app)
+          .delete(`/api/v1/studios/${id}`);
+      })
+      .then(deletedStudio => {
+        expect(deletedStudio.body).toEqual({ ...marvel, _id: expect.any(String) });
+      });
+  });
 });
