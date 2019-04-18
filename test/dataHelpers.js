@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connect = require('../lib/utils/connect');
-const seedData = require('./seedData');
+const seedData = require('./seed-data');
 const Studio = require('../lib/models/Studio');
 
 beforeAll(() => {

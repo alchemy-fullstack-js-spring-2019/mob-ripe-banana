@@ -1,5 +1,5 @@
-//const { getStudios } = require('../dataHelpers');
 require('dotenv').config();
+const { getStudios } = require('../dataHelpers');
 const request = require('supertest');
 const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
@@ -40,6 +40,10 @@ describe('studio routes', () => {
           __v: 0     
         });
       });
+  });
+
+  it('gets a list of studios', () => {
+    
   });
 
 });

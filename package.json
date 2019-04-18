@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/cosmolightfoot/mob-ripe-banana#readme",
   "devDependencies": {
+    "chance": "^1.0.18",
     "dotenv": "^7.0.0",
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
