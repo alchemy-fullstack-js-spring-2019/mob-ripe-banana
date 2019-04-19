@@ -60,4 +60,45 @@ describe.only('film route tests', () => {
         expect(res.body).toHaveLength(3);
       });
   });
+
+  it('gets a film by id', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app)
+            .get(`/api/v1/films/${film._id}`)
+        ]);
+      })
+      .then(([filmToFind, res]) => {
+        expect(res.body).toEqual({
+          _id: filmToFind._id,
+          title: filmToFind.title,
+          studio: {
+            _id: expect.any(String),
+            name: expect.any(String)
+          },
+          cast: [{
+            _id: expect.any(String),
+            role: expect.any(String),
+            actor: {
+              name: expect.any(String),
+              _id: expect.any(String)
+            }
+          },
+          {
+            _id: expect.any(String),
+            role: expect.any(String),
+            actor: {
+              name: expect.any(String),
+              _id: expect.any(String)
+            }
+          }],
+          released: expect.any(Number)
+        });
+      });
+  });
+
+
+
 });

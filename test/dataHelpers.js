@@ -5,6 +5,7 @@ const seedData = require('./seed-data');
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Reviewer = require('../lib/models/Reviewer');
+const Film = require('../lib/models/Film');
 
 beforeAll(() => {
   return connect();
@@ -34,5 +35,6 @@ const createGetters = Model => {
 module.exports = {
   ...createGetters(Studio),
   ...createGetters(Actor),
-  ...createGetters(Reviewer)
+  ...createGetters(Reviewer),
+  ...createGetters(Film)
 };
