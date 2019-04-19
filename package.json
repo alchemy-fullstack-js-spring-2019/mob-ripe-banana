@@ -34,6 +34,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "mongoose": "^5.5.2",
+    "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.9.1"
   }
 }

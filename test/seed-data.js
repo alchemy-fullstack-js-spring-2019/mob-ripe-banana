@@ -3,12 +3,14 @@ const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Reviewer = require('../lib/models/Reviewer');
 const Film = require('../lib/models/Film');
+const Review = require('../lib/models/Review');
 
 module.exports = ({
   studioCount = 5,
   actorCount = 5,
   reviewerCount = 6,
-  filmCount = 3 } = {}) => {
+  filmCount = 3,
+  reviewCount = 4 } = {}) => {
   const studios = [...Array(studioCount)].map(() => ({
     name: 'Studio',
     address: {
@@ -56,6 +58,18 @@ module.exports = ({
         createdActors,
         Reviewer.create(reviewers),
         Film.create(films)
-      ]);
+      ])
+        // eslint-disable-next-line no-unused-vars
+        .then(([s, a, reviewers, films]) => {
+          const reviews = [...Array(reviewCount)]
+            .map(() => ({
+              rating: Math.ceil((Math.random() * 5)),
+              reviewer: chance.pickone(reviewers)._id,
+              review: chance.sentence(),
+              film: chance.pickone(films)._id
+            }));
+
+          return Review.create(reviews);
+        });
     });
 };

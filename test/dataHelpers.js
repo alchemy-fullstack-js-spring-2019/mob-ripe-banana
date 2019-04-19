@@ -6,6 +6,7 @@ const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Reviewer = require('../lib/models/Reviewer');
 const Film = require('../lib/models/Film');
+const Review = require('../lib/models/Review');
 
 beforeAll(() => {
   return connect();
@@ -36,5 +37,6 @@ module.exports = {
   ...createGetters(Studio),
   ...createGetters(Actor),
   ...createGetters(Reviewer),
-  ...createGetters(Film)
+  ...createGetters(Film),
+  ...createGetters(Review)
 };
