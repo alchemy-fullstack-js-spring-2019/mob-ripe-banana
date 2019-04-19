@@ -107,4 +107,18 @@ describe('movie route tests', () => {
         });
       });
   });
+
+  it('can delete a movie', () => {
+    return getMovie()
+      .then(createdMovie => {
+        return Promise.all([
+          Promise.resolve(createdMovie._id),
+          request(app)
+            .delete(`/movies/${createdMovie._id}`)
+        ]);
+      })
+      .then(([id, res]) => {
+        expect(res.body).toEqual(id);
+      });
+  });
 });
