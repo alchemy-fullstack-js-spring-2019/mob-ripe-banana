@@ -4,7 +4,7 @@ const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
-describe.only('actors route test', () => {
+describe('actors route test', () => {
 
   it('creates an actor', () => {
     return request(app)
