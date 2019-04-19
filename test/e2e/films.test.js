@@ -99,6 +99,18 @@ describe.only('film route tests', () => {
       });
   });
 
-
+  it('can delete a film', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film._id),
+          request(app)
+            .delete(`/api/v1/films/${film._id}`)
+        ]);
+      })
+      .then(([_id, res]) => {
+        expect(res.body).toEqual({ _id });
+      });
+  });
 
 });
