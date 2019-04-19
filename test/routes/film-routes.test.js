@@ -1,4 +1,3 @@
-require('dotenv').config();
 const request = require('supertest');
 const app = require('../../lib/app');
 const { getStudio, getActor, getFilm } = require('../data-helper');
