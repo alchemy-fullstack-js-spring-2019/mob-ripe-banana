@@ -20,6 +20,5 @@ describe('Review model', () => {
             updatedAt: expect.anything(),
             _id: expect.any(mongoose.Types.ObjectId)
         });
-
     });
 });

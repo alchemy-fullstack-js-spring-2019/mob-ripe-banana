@@ -1,0 +1,3 @@
+beforeEach(() => {
+    return seedData();
+  });
