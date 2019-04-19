@@ -1,8 +1,7 @@
-const Review = require('../../lib/Models/Review');
-const mongoose = require('mongoose');
+// const Review = require('../../lib/Models/Review');
+// const mongoose = require('mongoose');
 
-describe('Review Model Tests', () => {
+describe.skip('Review Model Tests', () => {
   it('has rating, reviewer, review, film, createdAt, updatedAt', () => {
-    
   });
 });
