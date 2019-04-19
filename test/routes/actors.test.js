@@ -1,24 +1,9 @@
 const request = require('supertest');
 const Actor = require('../../lib/models/Actor');
-const mongoose = require('mongoose');
 const app = require('../../lib/app');
+const { getFilm } = require('../data-helpers');
 
 describe('actors routes', () => {
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  beforeAll(() => {
-    return mongoose.connect('mongodb://localhost:27017/actors-test', {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    });
-  });
-
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
 
   it('can create a new actor', () => {
     return request(app)
@@ -40,15 +25,10 @@ describe('actors routes', () => {
   });
 
   it('can get list a of actors', () => {
-    return Actor.create({
-      name: 'Toddman'
-    })
-      .then(() => {
-        return request(app)
-          .get('/actors'); 
-      })
+    return request(app)
+      .get('/actors')
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        expect(res.body).toHaveLength(100);
       });
   });
 
@@ -91,6 +71,21 @@ describe('actors routes', () => {
   });
 
   it('can delete a actor by ID', () => {
+    return getFilm()
+      .then(() => {
+        return request(app)
+          .get('/films');
+      })
+      .then(filmList => {
+        // console.log(filmList.body[0].cast[0].actor);
+        return request(app)
+          .delete(`/actors/${filmList.body[0].cast[0].actor}`);
+      })
+      .then(res => {
+        expect(res.body.error).toEqual('This actor cannot be deleted.');
+      });
+  });
+  it('deletes an actor that does not appear in a film', () => {
     return Actor.create({
       name: 'Warner Bros'
     })
@@ -106,4 +101,3 @@ describe('actors routes', () => {
       });
   });
 });
-

@@ -2,23 +2,24 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const app = require('../../lib/app');
 const Studio = require('../../lib/models/Studio');
+require('../data-helpers');
 
 describe('studio routes', () => {
   beforeEach(() => {
     return mongoose.connection.dropDatabase();
   });
 
-  beforeAll(() => {
-    return mongoose.connect('mongodb://localhost:27017/studio-test', {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    });
-  });
+  // beforeAll(() => {
+  //   return mongoose.connect('mongodb://localhost:27017/studio-test', {
+  //     useNewUrlParser: true,
+  //     useFindAndModify: false,
+  //     useCreateIndex: true
+  //   });
+  // });
 
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
+  // afterAll(() => {
+  //   return mongoose.connection.close();
+  // });
 
   it('can create a new studio', () => {
     return request(app)
