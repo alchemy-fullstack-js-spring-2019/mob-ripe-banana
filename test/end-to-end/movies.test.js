@@ -40,10 +40,23 @@ describe('movie route tests', () => {
               __v: 0
             });
           });
-          
-
       });
+  });
 
-
+  it('gets a list of movies', () => {
+    return request(app)
+      .get('/movies')
+      .then(res => {
+        expect(res.body).toHaveLength(100);
+        expect(res.body[0]).toEqual({
+          _id: expect.any(String),
+          released: 1983,
+          title: expect.any(String),
+          studio: {
+            _id: expect.any(String),
+            name: expect.any(String)
+          }
+        });
+      });
   });
 });

@@ -32,4 +32,4 @@ module.exports = {
   ...createGetters(Actor),
   ...createGetters(Movie),
   ...createGetters(Studio)
-}
+};
