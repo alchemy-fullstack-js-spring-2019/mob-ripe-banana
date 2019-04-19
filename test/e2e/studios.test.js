@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getStudio } = require('../dataHelpers');
+const { getStudio, getFilm } = require('../dataHelpers');
 const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
@@ -70,5 +70,21 @@ describe('studio routes', () => {
         expect(res.body).toEqual({ _id });
       });
   });
+
+  it('does not delete if the studio is in a film', () => {
+    return getFilm()
+      .then(createdFilm => {
+        return getStudio({ _id: createdFilm.studio });
+      })
+      .then(createdStudio => {
+        return request(app)
+          .delete(`/api/v1/studios/${createdStudio._id}`)
+          .then(res => {
+            expect(res.status).toEqual(400);
+            expect(res.body).toEqual({ error: 'Studio can\'t be deleted' })
+          });
+      });
+  });
+
 
 });
