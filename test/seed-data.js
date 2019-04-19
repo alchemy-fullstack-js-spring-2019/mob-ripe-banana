@@ -1,8 +1,9 @@
 const chance = require('chance').Chance();
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
+const Reviewer = require('../lib/models/Reviewer');
 
-module.exports = ({ studioCount = 5, actorCount = 5 } = {}) => {
+module.exports = ({ studioCount = 5, actorCount = 5, reviewerCount = 6 } = {}) => {
   const studios = [...Array(studioCount)].map(() => ({
     name: 'Studio',
     address: {
@@ -18,8 +19,14 @@ module.exports = ({ studioCount = 5, actorCount = 5 } = {}) => {
     pob: chance.city()
   }));
 
+  const reviewers = [...Array(reviewerCount)].map(() => ({
+    name: 'Ryan Gosling',
+    company: chance.company()
+  }));
+
   return Promise.all([
     Studio.create(studios),
-    Actor.create(actors)
+    Actor.create(actors),
+    Reviewer.create(reviewers)
   ]);
 };

@@ -52,14 +52,47 @@ describe.only('actors route test', () => {
       });
   });
 
-  it('updates an actor', () => {
+  it('updates an actor name', () => {
     return getActor()
       .then(createdActor => {
         return Promise.all([
           Promise.resolve(createdActor),
           request(app)
             .patch(`/api/v1/actors/${createdActor._id}`)
+            .send({
+              name: 'Ryan Gosling'
+            })
         ]);
+      })
+      .then(([createdActor, res]) => {
+        expect(res.body).toEqual({
+          name: 'Ryan Gosling',
+          dob: createdActor.dob,
+          pob: createdActor.pob,
+          _id: createdActor._id
+        });
+      });
+  });
+
+  it('updates an actor pob', () => {
+    return getActor()
+      .then(createdActor => {
+        return Promise.all([
+          Promise.resolve(createdActor),
+          request(app)
+            .patch(`/api/v1/actors/${createdActor._id}`)
+            .send({
+              pob: 'Ryan Gosling'
+            })
+        ]);
+      })
+      .then(([createdActor, res]) => {
+        expect(res.body).toEqual({
+          name: createdActor.name,
+          dob: createdActor.dob,
+          pob: 'Ryan Gosling',
+          _id: createdActor._id
+        });
       });
   });
 
