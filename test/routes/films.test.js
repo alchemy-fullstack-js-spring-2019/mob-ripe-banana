@@ -1,5 +1,4 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
 const app = require('../../lib/app');
 const Film = require('../../lib/Models/Film');
 const Actor = require('../../lib/Models/Actor');
@@ -35,24 +34,8 @@ function makeChildren(){
     });
 }
 
-
-
 describe('films routes', () => {
   
-  const studio = {
-    name: 'Miramax',
-    address: {
-      city: 'LA',
-      state: 'CA',
-      country: 'USA'
-    }
-  };
-  const actor = {
-    name: 'Jim',
-    dob: new Date(),
-    pob: 'Jamaica'
-  };
-
   it('can create a film', () => {
     return makeChildren()
       .then(movie => {
@@ -115,5 +98,32 @@ describe('films routes', () => {
           });
       });
   });
+
+  it('can delete a film by id', () => {
+    return makeChildren()
+      .then(movie => {
+        return Film.create(movie)
+          .then(createdMovie => {
+            return request(app)
+              .delete(`/api/v1/films/${createdMovie._id}`);
+          })
+          .then(deletedMovie => {
+            expect(deletedMovie.body).toEqual({
+              _id: expect.any(String),
+              title: 'Superman',
+              studio: { _id: expect.any(String) },
+              released: 1996,
+              cast: [
+                { 
+                  role: 'Superman', 
+                  actor: expect.any(String),
+                  _id: expect.any(String)
+                }
+              ]
+            });
+          });
+      });
+  });
+
 
 });
