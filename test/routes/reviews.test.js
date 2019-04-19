@@ -3,7 +3,6 @@ const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../../lib/app');
-// const Review = require('../../lib/models/Review');
 const Reviewer = require('../../lib/models/Reviewer');
 const seedData = require('../utils/seed-data');
 
