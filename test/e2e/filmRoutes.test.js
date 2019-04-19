@@ -112,8 +112,9 @@ describe('tests film routes', () => {
             ]);
           })
           .then((results) => {
-            console.log(results[1].body);
+            console.log(results[1].body.studio.name);
             expect(results[0]._id.toString()).toEqual(results[1].body._id.toString());
+            expect(results[1].body.studio.name).toBeTruthy();
           });
       });
   });
