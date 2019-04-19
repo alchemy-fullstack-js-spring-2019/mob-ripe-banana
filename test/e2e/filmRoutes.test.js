@@ -8,14 +8,6 @@ const Actor = require('../../lib/models/ActorSchema');
 
 const anyString = expect.any(String);
 
-// function for actor and studio
-//promise all
-// promise to create actor
-//promise to create studio
-// use actor and studio to help create film
-// popoulate in film route
-// test outcome
-
 function createActorStudio() {
   return Promise.all([
     Actor.create({ 
@@ -87,6 +79,61 @@ describe('tests film routes', () => {
               }]
             });
           });
+      });
+  });
+
+  it('gets all films', () => {
+    return createActorStudio()
+      .then(actorStudio => {
+        const fakeActor = actorStudio[0];
+        const fakeStudio = actorStudio[1];
+        return createFilm(fakeActor, fakeStudio)
+          .then(() => {
+            return request(app)
+              .get('/api/v1/films');
+          })
+          .then(res => {
+            expect(res.body).toHaveLength(1);
+          });
+      });
+  });
+
+  it('gets film by id', () => {
+    return createActorStudio()
+      .then(actorStudio => {
+        const fakeActor = actorStudio[0];
+        const fakeStudio = actorStudio[1];
+        return createFilm(fakeActor, fakeStudio)
+          .then(film => {
+            return Promise.all([
+              Promise.resolve(film),
+              request(app)
+                .get(`/api/v1/films/${film._id}`)    
+            ]);
+          })
+          .then((results) => {
+            console.log(results[1].body);
+            expect(results[0]._id.toString()).toEqual(results[1].body._id.toString());
+          });
+      });
+  });
+
+  it('deletes a film', () => {
+    return createActorStudio()
+      .then(actorStudio => {
+        const fakeActor = actorStudio[0];
+        const fakeStudio = actorStudio[1];
+        return createFilm(fakeActor, fakeStudio);
+      })
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app)
+            .delete(`/api/v1/films/${film._id}`)    
+        ]);   
+      })
+      .then(([film, res]) => {
+        expect(film._id.toString()).toEqual(res.body._id.toString());
       });
   });
 });
