@@ -64,5 +64,23 @@ describe('Film routes tests', () => {
         });
       });
   });
-
+  it('deletes a film by id', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app)
+            .delete(`/api/v1/films/${film._id}`)
+        ]);
+      })
+      .then(([film, res]) => {
+        expect(res.body).toEqual({
+          _id: film._id,
+          title: film.title,
+          released: film.released,
+          studio: film.studio,
+          cast: film.cast
+        });
+      });
+  });
 });
