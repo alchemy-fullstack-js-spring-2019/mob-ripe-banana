@@ -62,5 +62,23 @@ describe('reviewer routes', () => {
                 expect(res.body).toEqual(sampleReviewer);
             });
     });
+
+    it('updates a reviewer by id', () => {
+        return Reviewer
+            .create(sampleReviewer)
+            .then(reviewer => {
+                return request(app)
+                    .patch(`/api/v1/reviewers/${reviewer._id}`)
+                    .send({
+                        name: 'britany'
+                    });
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: 'britany',
+                    company: 'truckslut'
+                });
+            });
+    });
 });
 
