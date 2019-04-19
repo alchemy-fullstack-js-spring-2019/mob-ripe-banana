@@ -1,3 +1,5 @@
+require('dotenv').config();
+const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../../lib/app');
@@ -5,11 +7,7 @@ const Reviewer = require('../../lib/models/Reviewer');
 
 describe('reviewer routes', () => {
     beforeAll(() => {
-        return mongoose.connect('mongodb://127.0.0.1:27017/reviewers'), {
-            useNewUrlParser: true,
-            useFineAndModigy: true,
-            useCreateIndex: true
-        };
+        return connect();
     });
     
     beforeEach(() => {
