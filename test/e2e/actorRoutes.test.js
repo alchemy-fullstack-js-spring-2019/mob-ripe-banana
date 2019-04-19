@@ -32,7 +32,7 @@ describe('tests actor routes', () => {
     return mongoose.connection.dropDatabase();
   });
   
-  it.only('creates an actor', () => {
+  it('creates an actor', () => {
     return request(app)
       .post('/api/v1/actors')
       .send({
@@ -50,4 +50,20 @@ describe('tests actor routes', () => {
         });
       });
   });
+
+  it('find all actors', () => {
+    return createActor()
+      .then(() => {
+        return request(app)
+          .get('/api/v1/actors');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+        expect(res.body).toEqual([{
+          name: anyString,
+          _id: anyString
+        }]);
+      });
+  });
+
 });
