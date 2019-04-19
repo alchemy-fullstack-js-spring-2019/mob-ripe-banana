@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Film = require('../../lib/models/Film');
-const chance = require('chance').Chance();
 
 describe('film model', () => {
   it('has a title, studio, released, cast', () => {
