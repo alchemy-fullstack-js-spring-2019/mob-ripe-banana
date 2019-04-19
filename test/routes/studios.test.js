@@ -1,26 +1,9 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
 const app = require('../../lib/app');
 const Studio = require('../../lib/models/Studio');
 require('../data-helpers');
 
 describe('studio routes', () => {
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  // beforeAll(() => {
-  //   return mongoose.connect('mongodb://localhost:27017/studio-test', {
-  //     useNewUrlParser: true,
-  //     useFindAndModify: false,
-  //     useCreateIndex: true
-  //   });
-  // });
-
-  // afterAll(() => {
-  //   return mongoose.connection.close();
-  // });
-
   it('can create a new studio', () => {
     return request(app)
       .post('/studios')
@@ -55,7 +38,7 @@ describe('studio routes', () => {
           .get('/studios'); 
       })
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        expect(res.body).toHaveLength(6);
       });
   });
 
@@ -74,6 +57,7 @@ describe('studio routes', () => {
         });
       });
   });
+
   it('can delete a studio by ID', () => {
     return Studio.create({
       name: 'Warner Bros'
@@ -89,6 +73,4 @@ describe('studio routes', () => {
         expect(res.body._id).toEqual(createdStudio._id.toString());
       });
   });
-
-
 });

@@ -66,6 +66,7 @@ module.exports = ({ studioCount = 5, actorCount = 100, reviewerCount = 50, filmC
             review: chance.sentence({ words: 2 }),
             film: chance.pickone(films)._id
           }));
+          
           return Review.create(reviews);
         });
     });

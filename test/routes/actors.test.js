@@ -4,7 +4,6 @@ const app = require('../../lib/app');
 const { getFilm } = require('../data-helpers');
 
 describe('actors routes', () => {
-
   it('can create a new actor', () => {
     return request(app)
       .post('/actors')
@@ -77,7 +76,6 @@ describe('actors routes', () => {
           .get('/films');
       })
       .then(filmList => {
-        // console.log(filmList.body[0].cast[0].actor);
         return request(app)
           .delete(`/actors/${filmList.body[0].cast[0].actor}`);
       })
@@ -85,6 +83,7 @@ describe('actors routes', () => {
         expect(res.body.error).toEqual('This actor cannot be deleted.');
       });
   });
+  
   it('deletes an actor that does not appear in a film', () => {
     return Actor.create({
       name: 'Warner Bros'

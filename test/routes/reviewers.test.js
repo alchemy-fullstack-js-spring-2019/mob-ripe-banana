@@ -1,26 +1,9 @@
 const request = require('supertest');
 const Reviewer = require('../../lib/models/Reviewer');
-const mongoose = require('mongoose');
 const app = require('../../lib/app');
 require('../data-helpers');
 
 describe('Reviewer routes', () => {
-  // beforeEach(() => {
-  //   return mongoose.connection.dropDatabase();
-  // });
-
-  // beforeAll(() => {
-  //   return mongoose.connect('mongodb://localhost:27017/reviewers-test', {
-  //     useNewUrlParser: true,
-  //     useFindAndModify: false,
-  //     useCreateIndex: true
-  //   });
-  // });
-
-  // afterAll(() => {
-  //   return mongoose.connection.close();
-  // });
-
   it('can create a new Reviewer', () => {
     return request(app)
       .post('/reviewers')
@@ -112,4 +95,3 @@ describe('Reviewer routes', () => {
       });
   });
 });
-
