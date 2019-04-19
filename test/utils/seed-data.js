@@ -2,17 +2,26 @@ const chance = require('chance').Chance();
 const Reviewer = require('../../lib/models/Reviewer');
 const Review = require('../../lib/models/Review');
 // const Studio = require('../../lib/models/Studio');
+const Actor = require('../../lib/models/Actor');
 const mongoose = require('mongoose');
 
 module.exports = ({
     reviewerCount = 57,
-    reviewCount = 300
+    reviewCount = 300,
     // studioCount = 5
+    actorCount = 40
 } = {}) => {
     const reviewers = [...Array(reviewerCount)]
         .map(() => ({
             name: chance.name(),
             company: chance.radio()
+        }));
+
+    const actors = [...Array(actorCount)]
+        .map(() => ({
+            name: chance.name(),
+            dob: chance.date(),
+            pob: chance.city()
         }));
 
     return Reviewer
@@ -25,9 +34,15 @@ module.exports = ({
                     review: chance.string({ length: 120 }),
                     film: new mongoose.Types.ObjectId()
                 }));
+                
             return Promise.all([
                 createdReviewers,
-                Review.create(reviews)
+                Review.create(reviews),
+                Actor.create(actors)
             ]);
         });
+    
+    
+    
+    
 };

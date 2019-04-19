@@ -41,4 +41,11 @@ describe('actors routes', () => {
             });
     });
 
+    it('can get a list of actors', () => {
+        return request(app)
+            .get('/api/v1/actors')
+            .then(res => {
+                expect(res.body).toHaveLength(40);
+            });
+    });
 });
