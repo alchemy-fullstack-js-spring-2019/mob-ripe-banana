@@ -67,4 +67,29 @@ describe('Actor routes tests', () => {
         });
       });
   });
+
+  it('gets an actor by the id and patches', () => {
+    return request(app)
+      .post('/api/v1/actors')
+      .send({
+        name: 'Carlos Estévez',
+        dob: new Date('9/3/1965'),
+        pob: 'New York City'
+      })
+      .then(res => {
+        return request(app)
+          .patch(`/api/v1/actors/${res.body._id}`)
+          .send({
+            name: 'Charlie Sheen'
+          });
+      }) 
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Charlie Sheen',
+          dob: new Date('9/3/1965').toISOString(),
+          pob: 'New York City',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
