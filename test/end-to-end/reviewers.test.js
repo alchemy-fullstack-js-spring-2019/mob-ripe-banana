@@ -58,10 +58,30 @@ describe('reviewer route testes', () => {
           .get(`/reviewers/${reviewer._id}`);
       })
       .then(results => {
-        expect(results).toEqual({
+        expect(results.body).toEqual({
           _id: expect.any(String),
           name: 'Jorge Consuelo',
           company: 'Viva Consuelo'
+        });
+      });
+  });
+
+  it('updates a reviewer by id', () => {
+    return createReviewer()
+      .then(reviewer => {
+        return request(app)
+          .put(`/reviewers/${reviewer._id}`)
+          .send({
+            name: 'Carla',
+            company: 'Carla Reviews'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'Carla',
+          company: 'Carla Reviews',
+          __v: 0
         });
       });
   });
