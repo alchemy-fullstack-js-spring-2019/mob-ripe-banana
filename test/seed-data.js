@@ -2,6 +2,8 @@ const chance = require('chance').Chance();
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Film = require('../lib/models/Film');
+const Reviewer = require('../lib/models/Reviewer');
+const Review = require('../lib/models/Review');
 
 function seedStudios(studioCount = 5) {
   const studios = [...Array(studioCount)].map(() => ({
@@ -57,4 +59,27 @@ function seedFilm(filmCount = 25) {
     });
 }
 
-module.exports = seedFilm;
+function seedReviewer(reviewerCount = 10) {
+  const reviewers  = [...Array(reviewerCount)].map(() => ({
+    name: chance.name(),
+    company: chance.company()
+  }));
+
+  return Reviewer
+    .create(reviewers);
+}
+
+function seedReview(reviewCount = 50) {
+  return Promise.all([seedFilm(), seedReviewer()])
+    .then(([films, reviewers]) => {
+      const reviews = [...Array(reviewCount)].map(() => ({
+        rating: chance.integer({ min: 1, max: 5 }),
+        reviewer: chance.pickone(reviewers)._id,
+        review: chance.sentence(),
+        film: chance.pickone(films)._id
+      }));
+      return Review.create(reviews);
+    });
+}
+
+module.exports = seedReview;
