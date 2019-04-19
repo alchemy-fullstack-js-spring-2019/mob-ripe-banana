@@ -65,5 +65,20 @@ describe('tests actor routes', () => {
         }]);
       });
   });
-
+  it('gets actor by id', () => {
+    return createActor()
+      .then(createdActor => {
+        return request(app)
+          .get(`/api/v1/actors/${createdActor._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({     
+          name: anyString,
+          dob: anyString,
+          pob: anyString,
+          __v: 0,
+          _id: anyString 
+        });
+      });
+  });
 });
