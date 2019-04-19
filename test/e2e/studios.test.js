@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { getStudio } = require('../dataHelpers');
 const request = require('supertest');
-// const mongoose = require('mongoose');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
