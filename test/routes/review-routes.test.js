@@ -41,4 +41,23 @@ describe('review routes', () => {
         expect(res.body).toHaveLength(50);
       });
   });
+
+  it('gets a review by id', () => {
+    return getReview()
+      .then(review => Promise.all([
+        Promise.resolve(review),
+        request(app).get(`/api/v1/reviews/${review._id}`)
+      ]))
+      .then(([review, res]) => {
+        expect(res.body).toEqual({
+          _id: review._id,
+          rating: review.rating,
+          reviewer: review.reviewer,
+          review: review.review,
+          film: review.film,
+          createdAt: review.createdAt,
+          updatedAt: review.updatedAt
+        });
+      });
+  });
 });
