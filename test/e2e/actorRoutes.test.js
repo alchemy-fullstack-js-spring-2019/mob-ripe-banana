@@ -17,7 +17,7 @@ function createActor() {
 
 describe('tests actor routes', () => {
   beforeAll(() => {
-    return mongoose.connect('mongodb://localhost:27017/Warehouses', {
+    return mongoose.connect('mongodb://localhost:27017/warehouse', {
       useFindAndModify: false,
       useNewUrlParser: true,
       useCreateIndex: true
@@ -78,6 +78,28 @@ describe('tests actor routes', () => {
           pob: anyString,
           __v: 0,
           _id: anyString 
+        });
+      });
+  });
+
+  it('updates actor by id', () => {
+    return createActor()
+      .then(createdActor => {
+        return request(app)
+          .put(`/api/v1/actors/${createdActor._id}`)
+          .send({
+            name: 'billy',
+            dob: '1989-06-14T11:19:54.184Z',
+            pob: 'sherwood forest'
+            // _id: createdActor._id
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({    
+          name: 'billy',
+          dob: '1989-06-14T11:19:54.184Z',
+          pob: 'sherwood forest',
+          _id: expect.any(String)
         });
       });
   });
