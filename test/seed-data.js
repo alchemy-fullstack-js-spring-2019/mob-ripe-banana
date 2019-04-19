@@ -10,7 +10,7 @@ module.exports = ({
   actorCount = 5,
   reviewerCount = 6,
   filmCount = 3,
-  reviewCount = 4 } = {}) => {
+  reviewCount = 105 } = {}) => {
   const studios = [...Array(studioCount)].map(() => ({
     name: 'Studio',
     address: {

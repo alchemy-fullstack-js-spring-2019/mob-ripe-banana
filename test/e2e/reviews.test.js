@@ -34,5 +34,14 @@ describe('review route tests', () => {
       });
   });
 
+  it('gets a list of reviews', () => {
+    return request(app)
+      .get('/api/v1/reviews')
+      .then(res => {
+        console.log(res.body[0]);
+        expect(res.body).toHaveLength(100);
+      });
+  });
+
 });
 
