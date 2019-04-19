@@ -94,4 +94,19 @@ describe('actors routes', () => {
                 });
             });
     });
+
+    it(' can be deleted by id', () => {
+        return Actor
+            .create(sampleActor)
+            .then(actor => {
+                return Promise.all([
+                    Promise.resolve(actor._id.toString()),
+                    request(app).delete(`/api/v1/actors/${actor._id}`)
+                ]);
+            })
+            .then(([_id, res]) => {
+                expect(res.body).toEqual({ _id });
+            });
+    });
+
 });
