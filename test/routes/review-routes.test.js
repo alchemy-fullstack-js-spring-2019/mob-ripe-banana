@@ -3,6 +3,7 @@ const request = require('supertest');
 const app = require('../../lib/app');
 const { getFilm, getReviewer, getReview } = require('../data-helper');
 
+
 describe('review routes', () => {
   it('creates a review', () => {
     return Promise.all([
@@ -30,6 +31,14 @@ describe('review routes', () => {
           createdAt: expect.any(String),
           updatedAt: expect.any(String)
         });
+      });
+  });
+
+  it('gets all reviews', () => {
+    return request(app)
+      .get('/api/v1/reviews')
+      .then(res => {
+        expect(res.body).toHaveLength(50);
       });
   });
 });
