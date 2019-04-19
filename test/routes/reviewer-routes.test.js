@@ -93,4 +93,21 @@ describe('Reviewer Routes', () => {
         });
       });
   });
+
+  it('deletes a reviewer', () => {
+    return request(app)
+      .post('/api/v1/reviewers')
+      .send({
+        name: 'Colin',
+        company: 'Criticism Never Sleeps'
+      })
+      .then(res => request(app).delete(`/api/v1/reviewers/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Colin',
+          company: 'Criticism Never Sleeps',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
