@@ -3,7 +3,7 @@
 const app = require('./lib/app');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/Warehouses', {
+mongoose.connect('mongodb://localhost:27017/warehouse', {
   useFindAndModify: false,
   useNewUrlParser: true,
   useCreateIndex: true

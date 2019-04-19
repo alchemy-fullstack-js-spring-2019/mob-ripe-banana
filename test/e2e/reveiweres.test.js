@@ -14,7 +14,7 @@ function createReviewer() {
 
 describe('reviewers crud', () =>{
   beforeAll(() => {
-    return mongoose.connect('mongodb://localhost:27017/warehouses', {
+    return mongoose.connect('mongodb://localhost:27017/warehouse', {
       useFindAndModify: false,
       useNewUrlParser: true,
       useCreateIndex: true
