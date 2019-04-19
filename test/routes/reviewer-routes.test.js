@@ -69,4 +69,28 @@ describe('Reviewer Routes', () => {
         });
       });
   });
+
+  it('update reviewer by id', () => {
+    return request(app)
+      .post('/api/v1/reviewers')
+      .send({
+        name: 'Colin',
+        company: 'Criticism Never Sleeps'
+      })
+      .then(res => {
+        return request(app)
+          .patch(`/api/v1/reviewers/${res.body._id}`)
+          .send({
+            company: 'Tinsel Town Inc.',
+            dob: '12964'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Colin',
+          company: 'Tinsel Town Inc.',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
