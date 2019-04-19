@@ -1,11 +1,9 @@
 const request = require('supertest');
 const app = require('../../lib/app.js');
 const {
-  getStudio,
-  getActor,
-  getFilms,
   getFilm,
-  getReviewer
+  getReviewer,
+  getReviews
 } = require('../data-helpers');
 
 describe('film routes', () => {
@@ -38,6 +36,13 @@ describe('film routes', () => {
               updated_at: expect.any(String)
             });
           });
+      });
+  });
+
+  it('can get a list of reviews', () => {
+    return getReviews()
+      .then(reviews => {
+        expect(reviews).toHaveLength(100);
       });
   });
 });
