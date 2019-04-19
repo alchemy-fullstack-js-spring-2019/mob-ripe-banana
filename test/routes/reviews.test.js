@@ -24,15 +24,20 @@ describe('film routes', () => {
             rating: 3,
             reviewer: reviewer._id,
             review: 'neat',
-            film: film._id,
-
+            film: film._id
           })
           .then(res => {
             expect(res.body).toEqual({
-
+              rating: 3,
+              reviewer: expect.any(String),
+              review: 'neat',
+              film: expect.any(String),
+              __v: 0,
+              _id: expect.any(String),
+              created_at: expect.any(String),
+              updated_at: expect.any(String)
             });
           });
       });
-
   });
 });

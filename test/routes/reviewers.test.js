@@ -48,7 +48,7 @@ describe('Reviewer routes', () => {
           .get('/reviewers'); 
       })
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        expect(res.body).toHaveLength(51);
       });
   });
 
