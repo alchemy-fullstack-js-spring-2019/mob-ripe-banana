@@ -28,7 +28,7 @@ describe('Film model tests', () => {
         role: 'Charlie Sheen',
         actor: actor._id
       }]
-    })
+    });
 
     expect(film.toJSON()).toEqual({
       title: 'Charlie Sheen\'s Cool Movie',
