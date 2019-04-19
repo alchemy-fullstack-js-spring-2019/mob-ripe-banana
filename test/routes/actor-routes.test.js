@@ -92,4 +92,23 @@ describe('Actor routes tests', () => {
         });
       });
   });
+
+  it('deletes actor by id', () => {
+    return request(app)
+      .post('/api/v1/actors')
+      .send({
+        name: 'Charlie Sheen',
+        dob: new Date('9/3/1965'),
+        pob: 'New York City'
+      })
+      .then(res => request(app).delete(`/api/v1/actors/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Charlie Sheen',
+          dob: new Date('9/3/1965').toISOString(),
+          pob: 'New York City',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
