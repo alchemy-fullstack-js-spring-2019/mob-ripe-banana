@@ -1,7 +1,7 @@
 require('dotenv').config();
 const request = require('supertest');
 const app = require('../../lib/app');
-const { getStudio, getActor } = require('../data-helper');
+const { getStudio, getActor, getFilm } = require('../data-helper');
 
 describe('Film routes tests', () => {
   it('creates a film', () => {
@@ -42,6 +42,26 @@ describe('Film routes tests', () => {
       .get('/api/v1/films')
       .then(res => {
         expect(res.body).toHaveLength(25);
+      });
+  });
+
+  it('get a film by id', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app)
+            .get(`/api/v1/films/${film._id}`)
+        ]);
+      })
+      .then(([film, res]) => {
+        expect(res.body).toEqual({
+          _id: film._id,
+          title: film.title,
+          released: film.released,
+          studio: film.studio,
+          cast: film.cast
+        });
       });
   });
 
