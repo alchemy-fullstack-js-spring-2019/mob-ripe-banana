@@ -71,4 +71,27 @@ describe('actors routes', () => {
                 });
             });
     });
+
+    it('can update an actor', () => {
+        return Actor
+            .findOne()
+            .then(actor => {
+                return JSON.parse(JSON.stringify(actor));
+            })
+            .then(actor => {
+                return Promise.all([
+                    actor,
+                    request(app)
+                        .patch(`/api/v1/actors/${actor._id}`)
+                        .send({ name: 'changed' })
+                ]);
+            })
+            .then(([actor, res]) => {
+                expect(res.body).toEqual({
+                    name: 'changed',
+                    dob: actor.dob,
+                    pob: actor.pob
+                });
+            });
+    });
 });
