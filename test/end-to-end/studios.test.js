@@ -71,6 +71,7 @@ describe('studio model route test', () => {
           .get(`/studios/${studio._id}`);
       })
       .then(studio => {
+    
         expect(studio.body).toEqual({
           _id: expect.any(String),
           name: 'Dangerhouse Pics',
