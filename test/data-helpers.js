@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const seedData = require('./seedData');
+const seedData = require('./seed-data');
 const Actor = require('../lib/models/Actor');
 const Studio = require('../lib/models/Studio');
 const Reviewer = require('../lib/models/Reviewer');
