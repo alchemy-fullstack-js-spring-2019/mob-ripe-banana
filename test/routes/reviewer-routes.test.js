@@ -52,4 +52,21 @@ describe('Reviewer Routes', () => {
         });
       });
   });
+
+  it('gets a reviewer by the id', () => {
+    return request(app)
+      .post('/api/v1/reviewers')
+      .send({
+        name: 'Colin',
+        company: 'Criticism Never Sleeps'
+      })
+      .then(res => request(app).get(`/api/v1/reviewers/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'Colin',
+          company: 'Criticism Never Sleeps',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
