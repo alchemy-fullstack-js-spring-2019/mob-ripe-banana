@@ -52,6 +52,15 @@ describe.only('actors route test', () => {
       });
   });
 
+  it('updates an actor', () => {
+    return getActor()
+      .then(createdActor => {
+        return Promise.all([
+          Promise.resolve(createdActor),
+          request(app)
+            .patch(`/api/v1/actors/${createdActor._id}`)
+        ]);
+      });
+  });
 
-  
 });
