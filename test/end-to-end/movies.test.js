@@ -59,4 +59,36 @@ describe('movie route tests', () => {
         });
       });
   });
+
+  it('gets a moive by its id', () => {
+    return getMovie
+      .then(movie => {
+        return Promise.all([
+          Promise.resolve(movie),
+          request(app)
+            .get(`/movies/${movie._id}`)
+        ]);
+      })
+      .then(([movie, res]) => {
+        expect(res.body).toEqual({
+          _id: movie._id,
+          title: movie.title,
+          released: movie.released,
+          studio: {
+            _id: expect.any(String),
+            name: expect.any(String)
+          },
+          cast: [
+            {
+              _id: expect.any(String),
+              role: expect.any(String),
+              actor: {
+                _id: expect.any(String),
+                name: expect.any(String)
+              }
+            }
+          ]
+        });
+      });
+  });
 });
