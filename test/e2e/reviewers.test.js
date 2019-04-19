@@ -4,7 +4,7 @@ const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
-describe.only('reviewer route tests', () => {
+describe('reviewer route tests', () => {
 
   it('creates a reviewer', () => {
     return request(app)

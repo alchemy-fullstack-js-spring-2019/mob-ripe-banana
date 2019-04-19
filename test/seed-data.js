@@ -2,8 +2,13 @@ const chance = require('chance').Chance();
 const Studio = require('../lib/models/Studio');
 const Actor = require('../lib/models/Actor');
 const Reviewer = require('../lib/models/Reviewer');
+const Film = require('../lib/models/Film');
 
-module.exports = ({ studioCount = 5, actorCount = 5, reviewerCount = 6 } = {}) => {
+module.exports = ({
+  studioCount = 5,
+  actorCount = 5,
+  reviewerCount = 6,
+  filmCount = 3 } = {}) => {
   const studios = [...Array(studioCount)].map(() => ({
     name: 'Studio',
     address: {
@@ -25,8 +30,32 @@ module.exports = ({ studioCount = 5, actorCount = 5, reviewerCount = 6 } = {}) =
   }));
 
   return Promise.all([
-    Studio.create(studios),
     Actor.create(actors),
-    Reviewer.create(reviewers)
-  ]);
+    Studio.create(studios)
+  ])
+    .then(([createdActors, createdStudios]) => {
+      const films = [...Array(filmCount)]
+        .map(() => ({
+          title: chance.name(),
+          studio: chance.pickone(createdStudios)._id,
+          released: chance.year(),
+          cast: [
+            { 
+              role: chance.name(),
+              actor: chance.pickone(createdActors)._id
+            },
+            { 
+              role: chance.name(),
+              actor: chance.pickone(createdActors)._id
+            }
+          ]
+        }));
+        
+      return Promise.all([
+        createdStudios,
+        createdActors,
+        Reviewer.create(reviewers),
+        Film.create(films)
+      ]);
+    });
 };
