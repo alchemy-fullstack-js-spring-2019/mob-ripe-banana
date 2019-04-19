@@ -94,7 +94,8 @@ describe.only('film route tests', () => {
               _id: expect.any(String)
             }
           }],
-          released: expect.any(Number)
+          released: expect.any(Number),
+          reviews: expect.any(Array)
         });
       });
   });
