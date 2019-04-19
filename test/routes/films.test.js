@@ -1,7 +1,5 @@
 const request = require('supertest');
 const app = require('../../lib/app.js');
-const mongoose = require('mongoose');
-const Film = require('../../lib/models/Film');
 const {
   getStudio,
   getActor,
@@ -72,6 +70,19 @@ describe('film routes', () => {
           cast: film.cast,
           _id: film._id
         });
+      });
+  });
+
+  it('can delete a film by id', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app).delete(`/films/${film._id}`)
+        ]);
+      })
+      .then(([film, deletedFilm]) => {
+        expect(deletedFilm.body).toEqual(film._id);
       });
   });
 });
