@@ -38,5 +38,29 @@ describe('reviewer routes', () => {
                 });
             });
     });
+
+    it('returns list of all reviwers', () => {
+        return Reviewer
+            .create(sampleReviewer)
+            .then(() => {
+                return request(app)
+                    .get('/api/v1/reviewers');
+            })
+            .then(res => {
+                expect(res.body).toHaveLength(1);
+            });
+    });
+
+    it('gets a reviewer by id', () => {
+        return Reviewer
+            .create(sampleReviewer)
+            .then(reviewer => {
+                return request(app)
+                    .get(`/api/v1/reviewers/${reviewer._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual(sampleReviewer);
+            });
+    });
 });
 

@@ -66,6 +66,7 @@ describe('studio routes', () => {
                 expect(res.body).toEqual(sampleStudio);
             });
     });
+    
     it('deletes a studio by id', () => {
         return Studio
             .create(sampleStudio)
