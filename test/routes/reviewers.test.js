@@ -3,7 +3,6 @@ const request = require('supertest');
 const app = require('../../lib/app');
 const Reviewer = require('../../lib/models/Reviewer');
 
-
 describe('reviewer routes', () => {
     beforeAll(() => {
         return mongoose.connect('mongodb://127.0.0.1:27017/reviewers'), {
