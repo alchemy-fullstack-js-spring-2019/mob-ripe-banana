@@ -54,4 +54,12 @@ describe('reviews route', () => {
                 });
             });
     });
+        
+    it('gets 100 most recent reviews', () => {
+        return request(app)
+            .get('/api/v1/reviews')
+            .then(res => {
+                expect(res.body).toHaveLength(100);
+            });
+    });
 });
