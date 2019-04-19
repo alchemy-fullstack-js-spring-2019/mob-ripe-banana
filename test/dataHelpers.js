@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const connect = require('../lib/utils/connect');
 const seedData = require('./seed-data');
 const Studio = require('../lib/models/Studio');
+const Actor = require('../lib/models/Actor');
 
 beforeAll(() => {
   return connect();
@@ -30,5 +31,6 @@ const createGetters = Model => {
 };
 
 module.exports = {
-  ...createGetters(Studio)
+  ...createGetters(Studio),
+  ...createGetters(Actor)
 };
