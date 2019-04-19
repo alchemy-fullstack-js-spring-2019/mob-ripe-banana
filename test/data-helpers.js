@@ -4,6 +4,7 @@ const seedData = require('./seed-data');
 const Actor = require('../lib/models/Actor');
 const Studio = require('../lib/models/Studio');
 const Reviewer = require('../lib/models/Reviewer');
+const Film = require('../lib/models/Film');
 
 beforeAll(() => {
   return mongoose.connect(process.env.MONGODB_URI, {
@@ -34,6 +35,7 @@ const createGetters = Model => ({
 module.exports = {
   ...createGetters(Studio),
   ...createGetters(Actor),
-  ...createGetters(Reviewer)
+  ...createGetters(Reviewer),
+  ...createGetters(Film)
 };
 

@@ -5,6 +5,8 @@ const Film = require('../../lib/models/Film');
 const {
   getStudio,
   getActor,
+  getFilms,
+  getFilm
 } = require('../data-helpers');
 
 describe('film routes', () => {
@@ -41,6 +43,34 @@ describe('film routes', () => {
           }],
           _id: expect.any(String),
           __v: 0
+        });
+      });
+  });
+  it('can get a list of films', () => {
+    return getFilms()
+      .then(() => {
+        return request(app)
+          .get('/films');
+      })  
+      .then(res => {
+        expect(res.body).toHaveLength(50);
+      });
+  });
+  it('can get a single film by ID', () => {
+    return getFilm()
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          request(app).get(`/films/${film._id}`)
+        ]);
+      })
+      .then(([film, found]) => {
+        expect(found.body).toEqual({
+          title: film.title,
+          studio: film.studio,
+          released: film.released,
+          cast: film.cast,
+          _id: film._id
         });
       });
   });
