@@ -1,17 +1,12 @@
+require('dotenv').config();
+const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../../lib/app');
 const Studio = require('../../lib/models/Studio');
-// const connect = require('../../lib/utils/connect');
 
 describe('studio routes', () => {
-    beforeAll(() => {
-        return mongoose.connect('mongodb://127.0.0.1:27017/studios'), {
-            useNewUrlParser: true,
-            useFineAndModigy: true,
-            useCreateIndex: true
-        };
-    });
+    beforeAll(() => connect());
     
     beforeEach(() => {
         return mongoose.connection.dropDatabase();

@@ -1,3 +1,5 @@
+require('dotenv').config();
+const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../../lib/app');
@@ -6,13 +8,7 @@ const Reviewer = require('../../lib/models/Reviewer');
 const seedData = require('../utils/seed-data');
 
 describe('reviews route', () => {
-    beforeAll(() => {
-        return mongoose.connect('mongodb://127.0.0.1:27017/reviews'), {
-            useNewUrlParser: true,
-            useFineAndModigy: true,
-            useCreateIndex: true
-        };
-    });
+    beforeAll(() => connect());
     
     beforeEach(() => {
         return mongoose.connection.dropDatabase();
@@ -27,10 +23,10 @@ describe('reviews route', () => {
     });
 
     it('can create a review', () => {
-        Reviewer
+        return Reviewer
             .findOne()
             .then(reviewer => {
-                JSON.parse(JSON.stringify(reviewer));
+                return JSON.parse(JSON.stringify(reviewer));
             })
             .then(reviewer => {
                 return Promise.all([
@@ -50,9 +46,11 @@ describe('reviews route', () => {
                     rating: 1,
                     reviewer: reviewer._id,
                     review: 'I did not like',
-                    film: expect.any(mongoose.Types.ObjectId),
-                    _id: expect.any(mongoose.Types.ObjectId),
-                    __v: 0
+                    film: expect.any(String),
+                    _id: expect.any(String),
+                    __v: 0,
+                    createdAt: expect.any(String),
+                    updatedAt: expect.any(String)
                 });
             });
     });

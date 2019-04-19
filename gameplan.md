@@ -7,10 +7,9 @@
 
 
 ## Process
-- finish reviewers CRU ==> PATCH
-- Seed Data and **Data Helper**
 - create reviews, establish relationship with reviewers
     *POST and GET, but not PUT and DELETE
+        - Update old route tests with connect.js
     *Get - the most recent 100 (not by id)
 -Actors
 -Films

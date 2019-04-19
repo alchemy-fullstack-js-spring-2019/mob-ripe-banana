@@ -13,6 +13,10 @@ describe('reviewer routes', () => {
     beforeEach(() => {
         return mongoose.connection.dropDatabase();
     });
+    
+    afterEach(() => {
+        return mongoose.connection.dropDatabase();
+    });
 
     afterAll(() => {
         return mongoose.connection.close();
