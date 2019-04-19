@@ -36,4 +36,13 @@ describe('Film routes tests', () => {
         });
       });
   });
+
+  it('get a list of films', () => {
+    return request(app)
+      .get('/api/v1/films')
+      .then(res => {
+        expect(res.body).toHaveLength(25);
+      });
+  });
+
 });
