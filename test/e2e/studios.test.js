@@ -81,7 +81,7 @@ describe('studio routes', () => {
           .delete(`/api/v1/studios/${createdStudio._id}`)
           .then(res => {
             expect(res.status).toEqual(400);
-            expect(res.body).toEqual({ error: 'Studio can\'t be deleted' })
+            expect(res.body).toEqual({ error: 'Studio can\'t be deleted' });
           });
       });
   });

@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getActor } = require('../dataHelpers');
+const { getActor, getFilm } = require('../dataHelpers');
 const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
@@ -96,4 +96,32 @@ describe('actors route test', () => {
       });
   });
 
+  it('deletes actors', () => {
+    return getActor()
+      .then(createdActor => {
+        return Promise.all([
+          Promise.resolve(createdActor),
+          request(app)
+            .delete(`/api/v1/studios/${createdActor._id}`)
+        ]);
+      })
+      .then(([_id, res]) => {
+        expect(res.body).toEqual({ _id });
+      });
+  });
+
+  it('does not delete if actor is in films', () => {
+    return getFilm()
+      .then(createdFilm => {
+        return getActor({ _id: createdFilm.cast[0].actor });
+      })
+      .then(createdActor => {
+        return request(app)
+          .delete(`/api/v1/actors/${createdActor._id}`)
+          .then(res => {
+            expect(res.status).toEqual(400);
+            expect(res.body).toEqual({ error: 'Actor can\'t be deleted' });
+          });
+      });
+  });
 });
