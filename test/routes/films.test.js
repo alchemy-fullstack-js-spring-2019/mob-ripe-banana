@@ -44,6 +44,7 @@ describe('film routes', () => {
         });
       });
   });
+
   it('can get a list of films', () => {
     return getFilms()
       .then(() => {
@@ -54,7 +55,8 @@ describe('film routes', () => {
         expect(res.body).toHaveLength(50);
       });
   });
-  it('can get a single film by ID', () => {
+
+  it('can get a single film by id', () => {
     return getFilm()
       .then(film => {
         return Promise.all([

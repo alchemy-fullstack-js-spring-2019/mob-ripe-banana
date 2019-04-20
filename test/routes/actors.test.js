@@ -69,7 +69,7 @@ describe('actors routes', () => {
       });
   });
 
-  it('cannot delete a actor who appears in a film', () => {
+  it('cannot delete an actor who appears in a film', () => {
     return getFilm()
       .then(() => {
         return request(app)

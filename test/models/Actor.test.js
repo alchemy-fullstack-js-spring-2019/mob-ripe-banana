@@ -15,6 +15,7 @@ describe('actor model', () => {
       _id: expect.any(mongoose.Types.ObjectId)
     });
   });
+  
   it('requires a name', () => {
     const actor = new Actor({
       dob: new Date().getMonth(),

@@ -61,7 +61,7 @@ module.exports = ({ studioCount = 5, actorCount = 100, reviewerCount = 50, filmC
         .then(([films, reviewers]) => {
           const reviews = [...Array(reviewCount)].map(() => ({
 
-            rating: chance.integer({ min:1, max: 5 }),
+            rating: chance.integer({ min: 1, max: 5 }),
             reviewer: chance.pickone(reviewers)._id,
             review: chance.sentence({ words: 2 }),
             film: chance.pickone(films)._id

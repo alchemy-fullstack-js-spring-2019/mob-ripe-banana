@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Film = require('../../lib/models/Film');
 
 describe('film model', () => {
-  it('has a title, studio, released, cast', () => {
+  it('has a title, studio, released, and cast', () => {
     const film = new Film({
       title: 'Dog Movie',
       studio: new mongoose.Types.ObjectId(),

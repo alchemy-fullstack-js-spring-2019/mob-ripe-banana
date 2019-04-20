@@ -19,6 +19,7 @@ describe('studio model', () => {
         state: 'OR' },
       name: 'Warner Brothers' });
   });
+  
   it('has a required name field', () => {
     const studio = new Studio({
       address: {

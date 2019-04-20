@@ -3,8 +3,8 @@ const Reviewer = require('../../lib/models/Reviewer');
 const app = require('../../lib/app');
 require('../data-helpers');
 
-describe('Reviewer routes', () => {
-  it('can create a new Reviewer', () => {
+describe('reviewer routes', () => {
+  it('can create a new reviewer', () => {
     return request(app)
       .post('/reviewers')
       .send({
@@ -53,7 +53,7 @@ describe('Reviewer routes', () => {
       });
   });
 
-  it('can update reviewer by id', () => {
+  it('can update a reviewer by id', () => {
     return Reviewer.create({
       name: 'Toddman',
       company: 'BuzzFeed'
@@ -78,7 +78,7 @@ describe('Reviewer routes', () => {
       });
   });
 
-  it('can delete a reviewer by ID', () => {
+  it('can delete a reviewer by id', () => {
     return Reviewer.create({
       name: 'Crystal',
       company: 'Dood Inc.'

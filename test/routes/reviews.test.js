@@ -7,7 +7,7 @@ const {
 } = require('../data-helpers');
 
 describe('film routes', () => {
-  it('creates a review with POST', () => {
+  it('can create a new film', () => {
     return getFilm()
       .then(film => {
         return Promise.all([
