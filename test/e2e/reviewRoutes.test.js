@@ -99,4 +99,19 @@ describe('testing review routes', () => {
         });
       });
   });
+
+
+  it('get all', () => {
+    return createFilmReviewer()
+      .then(([film, reviewer]) => {
+        return createReview(film, reviewer)
+          .then(() => {
+            return request(app)
+              .get('/api/v1/reviews');
+          })
+          .then(res => {
+            expect(res.body).toHaveLength(1);
+          });
+      });
+  });
 });
