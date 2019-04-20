@@ -41,8 +41,12 @@ describe('film routes', () => {
 
   it('can get a list of reviews', () => {
     return getReviews()
-      .then(reviews => {
-        expect(reviews).toHaveLength(100);
+      .then(() => {
+        return request(app)
+          .get('/reviews');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(100);
       });
   });
 });
