@@ -1,22 +1,8 @@
-require('dotenv').config();
 const request = require('supertest');
-const mongoose = require('mongoose');
 const app = require('../../lib/app');
-const connect = require('../../lib/utils/connect');
+const { getStudio } = require('../data-helper');
 
 describe('Studio routes tests', () => {
-  beforeAll(() => {
-    return connect();
-  });
-
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
-
   it('creates a Studio', () => {
     return request(app)
       .post('/api/v1/studios')
@@ -44,73 +30,39 @@ describe('Studio routes tests', () => {
 
   it('finds all the studios', () => {
     return request(app)
-      .post('/api/v1/studios')
-      .send({
-        name: 'Cobra Kai Studios',
-        address: {
-          city: 'Los Angeles',
-          state: 'CA',
-          country: 'USA'
-        }
-      })
-      .then(() => request(app)
-        .get('/api/v1/studios')
-      )
+      .get('/api/v1/studios')
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        expect(res.body).toHaveLength(5);
         expect(res.body).toEqual(expect.any(Array));
       });
   });
 
   it('gets a studio by id', () => {
-    return request(app)
-      .post('/api/v1/studios')
-      .send({
-        name: 'Cobra Kai Studios',
-        address: {
-          city: 'Los Angeles',
-          state: 'CA',
-          country: 'USA'
-        }
-      })
-      .then(res => request(app)
-        .get(`/api/v1/studios/${res.body._id}`)
-      )
-      .then(res => {
+    return getStudio()
+      .then(studio => Promise.all([
+        Promise.resolve(studio),
+        request(app).get(`/api/v1/studios/${studio._id}`)
+      ]))
+      .then(([studio, res]) => {
         expect(res.body).toEqual({
-          name: 'Cobra Kai Studios',
-          address: {
-            city: 'Los Angeles',
-            state: 'CA',
-            country: 'USA'
-          },
-          _id: expect.any(String),
+          name: studio.name,
+          address: studio.address,
+          _id: studio._id,
+          films: expect.any(Array)
         });
       });
   });
   it('deletes a studio', () => {
-    return request(app)
-      .post('/api/v1/studios')
-      .send({
-        name: 'Cobra Kai Studios',
-        address: {
-          city: 'Los Angeles',
-          state: 'CA',
-          country: 'USA'
-        }
-      })
-      .then(res => request(app)
-        .delete(`/api/v1/studios/${res.body._id}`)
-      )
-      .then(res => {
+    return getStudio()
+      .then(studio => Promise.all([
+        Promise.resolve(studio),
+        request(app).delete(`/api/v1/studios/${studio._id}`)
+      ]))
+      .then(([studio, res]) => {
         expect(res.body).toEqual({
-          name: 'Cobra Kai Studios',
-          address: {
-            city: 'Los Angeles',
-            state: 'CA',
-            country: 'USA'
-          },
-          _id: expect.any(String),
+          name: studio.name,
+          address: studio.address,
+          _id: studio._id,
         });
       });
   });
