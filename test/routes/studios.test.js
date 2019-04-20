@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../../lib/app');
 const Studio = require('../../lib/models/Studio');
-require('../data-helpers');
+const { getFilm } = require('../data-helpers');
 
 describe('studio routes', () => {
   it('can create a new studio', () => {
@@ -58,7 +58,22 @@ describe('studio routes', () => {
       });
   });
 
-  it('can delete a studio by ID', () => {
+  it('cannot delete a studio that has a film', () => {
+    return getFilm()
+      .then(() => {
+        return request(app)
+          .get('/films');
+      })
+      .then(filmList => {
+        return request(app)
+          .delete(`/studios/${filmList.body[0].studio}`);
+      })
+      .then(res => {
+        expect(res.body.error).toEqual('This studio cannot be deleted.');
+      });
+  });
+  
+  it('can delete a studio if it has no films', () => {
     return Studio.create({
       name: 'Warner Bros'
     })

@@ -69,7 +69,7 @@ describe('actors routes', () => {
       });
   });
 
-  it('can delete a actor by ID', () => {
+  it('cannot delete a actor who appears in a film', () => {
     return getFilm()
       .then(() => {
         return request(app)
