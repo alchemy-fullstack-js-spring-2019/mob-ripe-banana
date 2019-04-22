@@ -12,7 +12,7 @@ describe('film routes', () => {
     beforeAll(() => connect());
     
     beforeEach(() => {
-        // return mongoose.connection.dropDatabase();
+        return mongoose.connection.dropDatabase();
     });
 
     beforeEach(() => {
@@ -25,8 +25,8 @@ describe('film routes', () => {
 
     it('can create a film with a studio and an actor', () => {
         return Promise.all([
-            Studio.findOne(), 
-            Actor.findOne()
+            Studio.findOne().then(studio => JSON.parse(JSON.stringify(studio))), 
+            Actor.findOne().then(actor => JSON.parse(JSON.stringify(actor)))
         ])
             .then(([studio, actor]) => {
                 return Promise.all([
@@ -46,13 +46,15 @@ describe('film routes', () => {
                 ]);
             })
             .then(([studio, actor, res]) => {
+                console.log(res.body);
                 expect(res.body).toEqual({
                     title: 'labrynth',
                     studio: studio._id,
                     released: 1985,
                     cast: [{
                         role: 'codpiece',
-                        actor: actor._id
+                        actor: actor._id,
+                        _id: expect.any(String)
                     }],
                     _id: expect.any(String),
                     __v: 0
