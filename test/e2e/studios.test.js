@@ -53,7 +53,8 @@ describe('studio routes', () => {
         expect(res.body).toEqual({
           _id: studio._id,
           name: studio.name,
-          address: expect.any(Object)
+          address: expect.any(Object),
+          films: expect.any(Array)
         });
       });
   });
@@ -94,6 +95,5 @@ describe('studio routes', () => {
           });
       });
   });
-
 
 });
