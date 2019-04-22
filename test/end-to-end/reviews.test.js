@@ -1,8 +1,6 @@
-const { getMovie, getReview, getReviewer } = require('../dataHelpers');
+const { getMovie, getReviewer } = require('../dataHelpers');
 const request = require('supertest');
 const app = require('../../lib/app');
-const Reviewer = require('../../lib/models/Reviewer');
-const Review = require('../../lib/models/Review');
 
 describe('reviews route tests', () => {
   it('can create a review', () => {
