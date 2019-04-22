@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const app = require('../../lib/app');
 const request = require('supertest');
-const ActorSchema = require('../../lib/models/ActorSchema');
 const chance = require('chance')();
+const ActorSchema = require('../../lib/models/ActorSchema');
+const FilmSchema = require('../../lib/models/FilmSchema');
+const StudioSchema = require('../../lib/models/StudioSchema');
 
 const anyString = expect.any(String);
 
@@ -12,6 +14,14 @@ function createActor() {
       name: chance.name(),
       dob: chance.date(),
       pob: chance.city()
+    });
+}
+
+function getStudio() {
+  return StudioSchema
+    .create({
+      name: 'StudioOne',
+      address: { state: chance.state(), city: chance.city(), country: chance.country() }
     });
 }
 
@@ -104,19 +114,49 @@ describe('tests actor routes', () => {
       });
   });
 
-  it('delete an actor by id ', () => {
-    return createActor()
-      .then(createdActor => {
-        return request(app)
-          .delete(`/api/v1/actors/${createdActor._id}`);
-      })
-      .then(res => {
-        expect(res.body).toEqual({
-          name: anyString,
-          dob: anyString,
-          pob: anyString,
-          _id: anyString
-        });
+  // it('delete an actor by id ', () => {
+  //   return createActor()
+  //     .then(createdActor => {
+  //       return request(app)
+  //         .delete(`/api/v1/actors/${createdActor._id}`);
+  //     })
+  //     .then(res => {
+  //       expect(res.body).toEqual({
+  //         name: anyString,
+  //         dob: anyString,
+  //         pob: anyString,
+  //         _id: anyString
+  //       });
+  //     });
+  // });
+
+  it('tries to delete actor but cannot bc film', () => {
+    return getStudio()
+      .then(studio => {
+        return createActor()
+          .then(createActor => {
+            return Promise.all([
+              Promise.resolve(createActor),
+              FilmSchema
+                .create({ 
+                  title: 'badfilm', 
+                  studio: studio._id, 
+                  released: chance.date(), 
+                  cast: { 
+                    role: chance.profession(), 
+                    actor: createActor._id 
+                  } 
+                })
+            ]);
+          })
+          .then(([actor, film]) => {
+            return request(app)
+              .delete(`/api/v1/actors/${actor._id}`)
+              .then(res => {
+                expect(res.body).toEqual({ message: 'Cannot delete actor, cast in a film' });
+              });
+
+          });
       });
   });
 });
