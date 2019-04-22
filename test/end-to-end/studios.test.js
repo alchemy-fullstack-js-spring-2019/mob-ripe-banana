@@ -1,4 +1,4 @@
-require('dotenv').config();
+const { getMovie, getStudio } = require('../dataHelpers');
 const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
@@ -16,16 +16,6 @@ describe('studio model route test', () => {
       }
     });
   };  
-
-  beforeAll(() => {
-    return connect();
-  });
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
 
 
   it('creates a studio', () => {
@@ -64,22 +54,22 @@ describe('studio model route test', () => {
       });
   });
 
-  it('gets a studio by id', () => {
-    return createStudio()
+  it.only('gets a studio by id', () => {
+    return getStudio()
       .then(studio => {
         return request(app)
           .get(`/studios/${studio._id}`);
       })
       .then(studio => {
-    
         expect(studio.body).toEqual({
           _id: expect.any(String),
-          name: 'Dangerhouse Pics',
+          name: expect.any(String),
           address: {
-            city: 'Snekville',
-            state: 'Snoregon',
-            country: 'Murica'
-          }
+            city: expect.any(String),
+            state: expect.any(String),
+            country: expect.any(String)
+          },
+          movies: expect.any(Array)
         });
       });
   });
