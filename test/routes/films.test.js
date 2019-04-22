@@ -77,4 +77,47 @@ describe('film routes', () => {
                 });
             });
     });
+
+    it.only('can get a flim by ID', () => {
+        return Film
+            .findOne()
+            .then(sampleFilm => {
+                return JSON.parse(JSON.stringify(sampleFilm));
+            })
+            .then(sampleFilm => {
+                return Promise.all([
+                    sampleFilm, 
+                    request(app)
+                        .get(`/api/v1/films/${sampleFilm._id}`),
+                ]);
+            })
+            .then(([sampleFilm, res]) => {
+                console.log(typeof res.body.studio.name);
+                expect(res.body).toEqual({
+                    title: sampleFilm.title,
+                    released: sampleFilm.released,
+                    studio: {
+                        _id: sampleFilm.studio,
+                        name: expect.any(String)
+                    },
+                    cast: [{
+                        _id: expect.any(String),
+                        role: expect.any(String),
+                        actor: {
+                            _id: expect.any(String),
+                            name: expect.any(String)
+                        }
+                    }],
+                    reviews: [{
+                        _id: expect.any(String),
+                        rating: expect.any(Number),
+                        review: expect.any(String),
+                        reviewer: {
+                            _id: expect.any(String),
+                            name: expect.any(String)
+                        }
+                    }]
+                });
+            });
+    });
 });
