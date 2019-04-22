@@ -1,0 +1,42 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
+const connect = require('../lib/utils/connect');
+const seedData = require('./seed-data');
+const Studio = require('../lib/models/Studio');
+const Actor = require('../lib/models/Actor');
+const Reviewer = require('../lib/models/Reviewer');
+const Film = require('../lib/models/Film');
+const Review = require('../lib/models/Review');
+
+beforeAll(() => {
+  return connect();
+});
+
+beforeEach(() => {
+  return mongoose.connection.dropDatabase();
+});
+
+beforeEach(() => {
+  return seedData();
+});
+
+afterAll(() => {
+  return mongoose.connection.close();
+});
+
+const prepare = model => JSON.parse(JSON.stringify(model));
+
+const createGetters = Model => {
+  return {
+    [`get${Model.modelName}`]: query => Model.findOne(query).then(prepare),
+    [`get${Model.modelName}s`]: query => Model.find(query).then(models => models.map(prepare))
+  };
+};
+
+module.exports = {
+  ...createGetters(Studio),
+  ...createGetters(Actor),
+  ...createGetters(Reviewer),
+  ...createGetters(Film),
+  ...createGetters(Review)
+};
