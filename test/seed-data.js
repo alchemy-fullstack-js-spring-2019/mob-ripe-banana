@@ -69,7 +69,7 @@ function seedReviewer(reviewerCount = 10) {
     .create(reviewers);
 }
 
-function seedReview(reviewCount = 50) {
+function seedReview(reviewCount = 150) {
   return Promise.all([seedFilm(), seedReviewer()])
     .then(([films, reviewers]) => {
       const reviews = [...Array(reviewCount)].map(() => ({

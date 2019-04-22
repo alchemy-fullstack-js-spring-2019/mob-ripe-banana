@@ -38,7 +38,7 @@ describe('review routes', () => {
     return request(app)
       .get('/api/v1/reviews')
       .then(res => {
-        expect(res.body).toHaveLength(50);
+        expect(res.body).toHaveLength(100);
       });
   });
 
