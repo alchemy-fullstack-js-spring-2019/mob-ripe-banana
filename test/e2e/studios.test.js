@@ -3,7 +3,7 @@ const { getStudio, getFilm } = require('../dataHelpers');
 const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
-const Studio = require('../../lib/models/Studio')
+const Studio = require('../../lib/models/Studio');
 
 describe('studio routes', () => {
 
