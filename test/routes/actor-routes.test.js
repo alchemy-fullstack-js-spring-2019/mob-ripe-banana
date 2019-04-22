@@ -63,7 +63,8 @@ describe('Actor routes tests', () => {
           name: 'Charlie Sheen',
           dob: new Date('9/3/1965').toISOString(),
           pob: 'New York City',
-          _id: expect.any(String)
+          _id: expect.any(String),
+          films: expect.any(Array)
         });
       });
   });
