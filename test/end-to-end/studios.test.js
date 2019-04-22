@@ -50,11 +50,11 @@ describe('studio model route test', () => {
           .get('/studios');
       })
       .then(studios => {
-        expect(studios.body).toHaveLength(1);
+        expect(studios.body).toHaveLength(6);
       });
   });
 
-  it.only('gets a studio by id', () => {
+  it('gets a studio by id', () => {
     return getStudio()
       .then(studio => {
         return request(app)

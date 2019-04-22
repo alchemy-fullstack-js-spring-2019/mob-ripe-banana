@@ -1,4 +1,4 @@
-require('dotenv').config();
+const { getActor } = require('../dataHelpers');
 const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
 const request = require('supertest');
@@ -14,16 +14,6 @@ describe('actor route tests', () => {
       pob: 'Reno'
     });
   };
-
-  beforeAll(() => {
-    return connect();
-  });
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-  afterAll(() => {
-    return mongoose.connection.close();
-  });
 
   it('creates an actor', () => {
     return request(app)
@@ -51,21 +41,22 @@ describe('actor route tests', () => {
           .get('/actors');
       })
       .then(actors => {
-        expect(actors.body).toHaveLength(1);
+        expect(actors.body).toHaveLength(51);
       });
   });
 
   it('gets an actor by their id', () => {
-    return createActor()
+    return getActor()
       .then(actor => {
         return request(app)
           .get(`/actors/${actor._id}`);
       })
       .then(actor => {
         expect(actor.body).toEqual({
-          name: 'Danger',
-          dob: dob.toISOString(),
-          pob: 'Reno'
+          name: expect.any(String),
+          dob: expect.any(String),
+          pob: expect.any(String),
+          movies: expect.any(Array)
         });
       });
   });
