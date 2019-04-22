@@ -149,7 +149,7 @@ describe('tests actor routes', () => {
                 })
             ]);
           })
-          .then(([actor, film]) => {
+          .then(([actor]) => {
             return request(app)
               .delete(`/api/v1/actors/${actor._id}`)
               .then(res => {
