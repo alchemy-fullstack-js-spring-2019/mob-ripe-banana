@@ -127,3 +127,5 @@ describe('films routes', () => {
 
 
 });
+
+module.exports = makeChildren;

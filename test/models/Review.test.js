@@ -16,7 +16,7 @@ describe('Review Model Tests', () => {
       review: 'Great!',
       reviewer: expect.any(mongoose.Types.ObjectId),
       film: expect.any(mongoose.Types.ObjectId),
-      _id:expect.any(mongoose.Types.ObjectId)
+      _id: expect.any(mongoose.Types.ObjectId)
     });
   });
 
