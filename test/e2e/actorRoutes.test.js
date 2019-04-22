@@ -114,21 +114,22 @@ describe('tests actor routes', () => {
       });
   });
 
-  // it('delete an actor by id ', () => {
-  //   return createActor()
-  //     .then(createdActor => {
-  //       return request(app)
-  //         .delete(`/api/v1/actors/${createdActor._id}`);
-  //     })
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         name: anyString,
-  //         dob: anyString,
-  //         pob: anyString,
-  //         _id: anyString
-  //       });
-  //     });
-  // });
+  it('delete an actor by id ', () => {
+    return createActor()
+      .then(createdActor => {
+        return request(app)
+          .delete(`/api/v1/actors/${createdActor._id}`);
+      })
+      .then(res => {
+        console.log(res.body);
+        expect(res.body).toEqual({
+          name: anyString,
+          dob: anyString,
+          pob: anyString,
+          _id: anyString
+        });
+      });
+  });
 
   it('tries to delete actor but cannot bc film', () => {
     return getStudio()
