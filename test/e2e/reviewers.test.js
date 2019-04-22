@@ -44,7 +44,8 @@ describe('reviewer route tests', () => {
         expect(res.body).toEqual({
           name: reviewer.name,
           company: reviewer.company,
-          _id: reviewer._id
+          _id: reviewer._id,
+          reviews: expect.any(Array)
         });
       });
   });
