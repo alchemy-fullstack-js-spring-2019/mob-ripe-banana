@@ -103,7 +103,8 @@ describe('movie route tests', () => {
                 name: expect.any(String)
               }
             }
-          ]
+          ],
+          reviews: expect.any(Array)
         });
       });
   });

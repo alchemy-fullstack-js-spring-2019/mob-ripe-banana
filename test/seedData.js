@@ -74,7 +74,7 @@ module.exports = ({
           rating: chance.integer({ min: 1, max: 5 }),
           reviewer: chance.pickone(createdReviewers)._id,
           review: chance.sentence(),
-          movie: chance.pickone(createdMovies),
+          movie: chance.pickone(createdMovies)._id,
         }));
       return Promise.all([
         Promise.resolve(createdReviewers),
