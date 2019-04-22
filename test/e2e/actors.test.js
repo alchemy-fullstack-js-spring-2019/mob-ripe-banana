@@ -48,7 +48,8 @@ describe('actors route test', () => {
           _id: actor._id,
           name: actor.name,
           dob: actor.dob,
-          pob: actor.pob
+          pob: actor.pob,
+          films: expect.any(Array)
         });
       });
   });
