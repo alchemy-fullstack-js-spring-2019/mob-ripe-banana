@@ -58,8 +58,12 @@ describe('Film routes tests', () => {
           _id: film._id,
           title: film.title,
           released: film.released,
-          studio: film.studio,
-          cast: film.cast
+          studio: {
+            _id: expect.any(String),
+            name: expect.any(String)
+          },
+          cast: expect.any(Array),
+          reviews: expect.any(Array)
         });
       });
   });
