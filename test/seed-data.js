@@ -19,7 +19,7 @@ function seedStudios(studioCount = 5) {
     .create(studios);
 }
 
-function seedActors(actorCount = 100) {
+function seedActors(actorCount = 10) {
   const year = chance.year({
     min: 1920,
     max: 2018
@@ -35,7 +35,7 @@ function seedActors(actorCount = 100) {
     .create(actors);
 }
 
-function seedFilm(filmCount = 25) {
+function seedFilm(filmCount = 100) {
   return Promise.all([seedStudios(), seedActors()])
     .then(([studios, actors]) => {
       const films = [...Array(filmCount)].map(() => ({

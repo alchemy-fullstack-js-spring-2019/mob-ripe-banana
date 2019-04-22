@@ -40,7 +40,7 @@ describe('Film routes tests', () => {
     return request(app)
       .get('/api/v1/films')
       .then(res => {
-        expect(res.body).toHaveLength(25);
+        expect(res.body).toHaveLength(100);
       });
   });
 

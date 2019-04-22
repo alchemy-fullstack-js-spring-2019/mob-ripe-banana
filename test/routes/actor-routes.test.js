@@ -32,7 +32,7 @@ describe('Actor routes tests', () => {
       })
       .then(() => request(app).get('/api/v1/actors'))
       .then(res => {
-        expect(res.body).toHaveLength(101);
+        expect(res.body).toHaveLength(11);
       });
   });
 
