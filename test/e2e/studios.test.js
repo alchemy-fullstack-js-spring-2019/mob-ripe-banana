@@ -3,6 +3,7 @@ const { getStudio, getFilm } = require('../dataHelpers');
 const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
+const Studio = require('../../lib/models/Studio')
 
 describe('studio routes', () => {
 
@@ -58,7 +59,14 @@ describe('studio routes', () => {
   });
 
   it('deletes studio route', () => {
-    return getStudio()
+    return Studio.create({
+      name: 'Universal Pictures',
+      address: {
+        city: 'Los Angeles',
+        state: 'CA',
+        country: 'US'
+      }
+    })
       .then(createdStudio => {
         return Promise.all([
           Promise.resolve(createdStudio._id),
@@ -66,8 +74,9 @@ describe('studio routes', () => {
             .delete(`/api/v1/studios/${createdStudio._id}`)
         ]);
       })
-      .then(([_id, res]) => {
-        expect(res.body).toEqual({ _id });
+      .then(([createdId, res]) => {
+        const id = createdId.toString();
+        expect(res.body).toEqual({ _id: id });
       });
   });
 

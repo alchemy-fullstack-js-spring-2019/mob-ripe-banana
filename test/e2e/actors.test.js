@@ -3,6 +3,7 @@ const { getActor, getFilm } = require('../dataHelpers');
 const request = require('supertest');
 require('../../lib/utils/connect')();
 const app = require('../../lib/app');
+const Actor = require('../../lib/models/Actor');
 
 describe('actors route test', () => {
 
@@ -97,16 +98,21 @@ describe('actors route test', () => {
   });
 
   it('deletes actors', () => {
-    return getActor()
+    return Actor.create({
+      name: 'Ryan Gosling',
+      dob: new Date(),
+      pob: 'Canada'
+    })
       .then(createdActor => {
         return Promise.all([
-          Promise.resolve(createdActor),
+          Promise.resolve(createdActor._id),
           request(app)
-            .delete(`/api/v1/studios/${createdActor._id}`)
+            .delete(`/api/v1/actors/${createdActor._id}`)
         ]);
       })
-      .then(([_id, res]) => {
-        expect(res.body).toEqual({ _id });
+      .then(([createdId, res]) => {
+        const id = createdId.toString();
+        expect(res.body).toEqual({ _id: id });
       });
   });
 
