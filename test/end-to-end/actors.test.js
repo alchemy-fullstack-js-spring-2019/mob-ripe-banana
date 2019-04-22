@@ -96,4 +96,15 @@ describe('actor route tests', () => {
         expect(res.body._id).toEqual(id.toString());
       });
   });
+
+  it('throws error if delete is called when movies exist', () => {
+    return getActor()
+      .then(actor => {
+        return request(app)
+          .delete(`/actors/${actor._id}`);
+      })
+      .then(error => {
+        expect(error.body.error).toEqual('Cannot delete actor with movies');
+      });
+  });
 });
