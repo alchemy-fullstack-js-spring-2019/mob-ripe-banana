@@ -3,14 +3,15 @@ const Reviewer = require('../../lib/models/Reviewer');
 const Review = require('../../lib/models/Review');
 const Studio = require('../../lib/models/Studio');
 const Actor = require('../../lib/models/Actor');
+const Film = require('../../lib/models/Film');
 const mongoose = require('mongoose');
 
 module.exports = ({
     reviewerCount = 57,
     reviewCount = 300,
     studioCount = 5,
-    actorCount = 40
-
+    actorCount = 40,
+    filmCount = 100
 } = {}) => {
     const reviewers = [...Array(reviewerCount)]
         .map(() => ({
@@ -35,6 +36,8 @@ module.exports = ({
             }
         }));
 
+
+
     return Reviewer
         .create(reviewers)
         .then(createdReviewers => {
@@ -52,7 +55,24 @@ module.exports = ({
                 Actor.create(actors),
                 Studio.create(studios)
             ]);
+        })
+        .then(([reviewers, reviews, actors, studios]) => {
+            const films = [...Array(filmCount)]
+                .map(() => ({
+                    title: chance.name(),
+                    studio: chance.pickone(studios)._id,
+                    released: chance.year(),
+                    cast: [{
+                        role: chance.name(),
+                        actor: chance.pickone(actors)._id
+                    }]
+                }));
+            return Promise.all([
+                Film.create(films),
+                reviewers,
+                reviews,
+                actors,
+                studios
+            ]);
         });
-    
-    
 };

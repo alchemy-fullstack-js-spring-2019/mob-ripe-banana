@@ -5,7 +5,7 @@ const request = require('supertest');
 const app = require('../../lib/app');
 const Actor = require('../../lib/models/Actor');
 const Studio = require('../../lib/models/Studio');
-// const Film = require('../../lib/models/Film');
+const Film = require('../../lib/models/Film');
 const seedData = require('../utils/seed-data');
 
 describe('film routes', () => {
@@ -46,7 +46,6 @@ describe('film routes', () => {
                 ]);
             })
             .then(([studio, actor, res]) => {
-                console.log(res.body);
                 expect(res.body).toEqual({
                     title: 'labrynth',
                     studio: studio._id,
@@ -58,6 +57,23 @@ describe('film routes', () => {
                     }],
                     _id: expect.any(String),
                     __v: 0
+                });
+            });
+    });
+
+    it('can get a list of films', ()  => {
+        return request(app)
+            .get('/api/v1/films')
+            .then(res => {
+                expect(res.body).toHaveLength(100);
+                expect(res.body[0]).toEqual({
+                    _id: expect.any(String),
+                    title: expect.any(String),
+                    released: expect.any(Number),
+                    studio: {
+                        _id: expect.any(String),
+                        name: expect.any(String)
+                    }
                 });
             });
     });
