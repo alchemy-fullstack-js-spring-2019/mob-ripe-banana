@@ -58,12 +58,9 @@ describe('Studio routes tests', () => {
         Promise.resolve(studio),
         request(app).delete(`/api/v1/studios/${studio._id}`)
       ]))
+      // eslint-disable-next-line no-unused-vars
       .then(([studio, res]) => {
-        expect(res.body).toEqual({
-          name: studio.name,
-          address: studio.address,
-          _id: studio._id,
-        });
+        expect(res.body).toEqual({ error:'Cannot delete studio, while films still exist' });
       });
   });
 });
