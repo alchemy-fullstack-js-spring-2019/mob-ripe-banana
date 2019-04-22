@@ -84,15 +84,19 @@ describe('films routes', () => {
                 expect(res.body).toEqual({
                   _id: expect.any(String),
                   title: 'Superman',
-                  studio: { _id: expect.any(String) },
+                  studio: { 
+                    _id: expect.any(String),
+                    name: 'Miramax'
+                  },
                   released: 1996,
-                  cast: [
-                    { 
-                      role: 'Superman', 
-                      actor: expect.any(String),
-                      _id: expect.any(String)
-                    }
-                  ]
+                  cast: [{ 
+                    role: 'Superman', 
+                    actor: {
+                      _id: expect.any(String),
+                      name: 'Jim'
+                    },  
+                    _id: expect.any(String)
+                  }]
                 });       
               });
           });
