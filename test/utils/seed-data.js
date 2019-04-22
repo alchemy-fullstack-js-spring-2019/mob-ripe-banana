@@ -1,15 +1,16 @@
 const chance = require('chance').Chance();
 const Reviewer = require('../../lib/models/Reviewer');
 const Review = require('../../lib/models/Review');
-// const Studio = require('../../lib/models/Studio');
+const Studio = require('../../lib/models/Studio');
 const Actor = require('../../lib/models/Actor');
 const mongoose = require('mongoose');
 
 module.exports = ({
     reviewerCount = 57,
     reviewCount = 300,
-    // studioCount = 5
+    studioCount = 5,
     actorCount = 40
+
 } = {}) => {
     const reviewers = [...Array(reviewerCount)]
         .map(() => ({
@@ -22,6 +23,16 @@ module.exports = ({
             name: chance.name(),
             dob: chance.date(),
             pob: chance.city()
+        }));
+    
+    const studios = [...Array(studioCount)]
+        .map(() => ({
+            name: chance.radio(),
+            address: {
+                city: chance.city(),
+                state: chance.state(),
+                country: chance.country()
+            }
         }));
 
     return Reviewer
@@ -38,7 +49,8 @@ module.exports = ({
             return Promise.all([
                 createdReviewers,
                 Review.create(reviews),
-                Actor.create(actors)
+                Actor.create(actors),
+                Studio.create(studios)
             ]);
         });
     

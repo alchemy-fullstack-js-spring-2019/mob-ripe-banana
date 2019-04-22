@@ -19,4 +19,4 @@
 ## Process
 
 -Films
-make post, get, getByIOd, delete and NO patch.
+make post, get, getById, delete and NO patch.
