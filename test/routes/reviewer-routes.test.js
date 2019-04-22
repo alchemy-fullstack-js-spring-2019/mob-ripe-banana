@@ -65,7 +65,8 @@ describe('Reviewer Routes', () => {
         expect(res.body).toEqual({
           name: 'Colin',
           company: 'Criticism Never Sleeps',
-          _id: expect.any(String)
+          _id: expect.any(String),
+          reviews: expect.any(Array)
         });
       });
   });
