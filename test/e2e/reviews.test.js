@@ -1,7 +1,5 @@
-require('dotenv').config();
 const request = require('supertest');
 const { getReview, getFilm, getReviewer } = require('../dataHelpers');
-require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
 describe('review route tests', () => {

@@ -1,7 +1,5 @@
-require('dotenv').config();
 const { getFilm, getStudio, getActors } = require('../dataHelpers');
 const request = require('supertest');
-require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 
 describe.only('film route tests', () => {

@@ -1,7 +1,5 @@
-require('dotenv').config();
 const { getActor, getFilm } = require('../dataHelpers');
 const request = require('supertest');
-require('../../lib/utils/connect')();
 const app = require('../../lib/app');
 const Actor = require('../../lib/models/Actor');
 
