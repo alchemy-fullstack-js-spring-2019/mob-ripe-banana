@@ -1,6 +1,4 @@
-const { getMovie, getStudio } = require('../dataHelpers');
-const connect = require('../../lib/utils/connect');
-const mongoose = require('mongoose');
+const { getStudio } = require('../dataHelpers');
 const request = require('supertest');
 const app = require('../../lib/app');
 const Studio = require('../../lib/models/Studio');
@@ -85,6 +83,17 @@ describe('studio model route test', () => {
       })
       .then(([id, res]) => {
         expect(res.body._id).toEqual(id.toString());
+      });
+  });
+
+  it('throws error if delete is called when movies exist', () => {
+    return getStudio()
+      .then(studio => {
+        return request(app)
+          .delete(`/studios/${studio._id}`);
+      })
+      .then(error => {
+        expect(error.body.error).toEqual('Cannot delete studio with movies');
       });
   });
 });
