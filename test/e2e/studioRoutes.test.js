@@ -3,6 +3,7 @@ const app = require('../../lib/app');
 const request = require('supertest');
 const StudioSchema = require('../../lib/models/StudioSchema');
 const chance = require('chance')();
+const FilmSchema = require('../../lib/models/FilmSchema');
 
 function getStudio() {
   return StudioSchema
@@ -89,6 +90,22 @@ describe('studio routes', () => {
           address: { state: expect.any(String), city: expect.any(String), country: expect.any(String) },
           _id: expect.any(String)
         });
+      });
+  });
+
+
+  it('tries to delete studio but cant because it has a film', () => {
+    return getStudio()
+      .then(createdStudio => {
+        return FilmSchema
+          .create({ title: 'studio', studio: createdStudio._id, released: chance.date() })
+          .then(film => {
+            return request(app)
+              .delete(`/api/v1/studios/${film.studio}`);
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({ message: 'Can\'t delete. You have films in this studio.' });
       });
   });
 
