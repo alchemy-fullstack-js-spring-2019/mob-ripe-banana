@@ -3,7 +3,27 @@ const app = require('../../lib/app');
 const Film = require('../../lib/Models/Film');
 const Actor = require('../../lib/Models/Actor');
 const Studio = require('../../lib/Models/Studio');
+const Reviewer = require('../../lib/Models/Reviewer');
+const Review = require('../../lib/Models/Review');
 require('../data-helpers');
+
+function makeReview(createdMovie){
+  return Reviewer.create({
+    name:'test',
+    company:'alchemy'
+  })
+    .then(newReviewer => {
+      return Review.create({
+        rating:5,
+        reviewer: newReviewer._id,
+        review: 'awesome',
+        film: createdMovie._id
+      });
+    })
+    .then(res => {
+      return Promise.resolve(res.body);
+    });
+}
 
 function makeChildren(){
   return Promise.all([
@@ -73,33 +93,51 @@ describe('films routes', () => {
       });
   });
 
-  it('get film by id', () => {
+  it.only('get film by id', () => {
     return makeChildren()
       .then(movie => {
-        return Film.create(movie)
-          .then(createdMovie => {
-            return request(app)
-              .get(`/api/v1/films/${createdMovie._id}`)
-              .then(res => {
-                expect(res.body).toEqual({
-                  _id: expect.any(String),
-                  title: 'Superman',
-                  studio: { 
-                    _id: expect.any(String),
-                    name: 'Miramax'
-                  },
-                  released: 1996,
-                  cast: [{ 
-                    role: 'Superman', 
-                    actor: {
-                      _id: expect.any(String),
-                      name: 'Jim'
-                    },  
-                    _id: expect.any(String)
-                  }]
-                });       
-              });
-          });
+        return Film.create(movie);
+      })
+      .then(film => {
+        return Promise.all([
+          Promise.resolve(film),
+          makeReview(film)
+        ]);
+      })
+      .then(([film, review]) => {
+        return Promise.all([
+          request(app)
+            .get(`/api/v1/films/${film._id}`),
+          Promise.resolve(review)
+        ]);
+      })
+      .then(([film, review]) => {
+        expect(film.body).toEqual({
+          _id: expect.any(String),
+          title: 'Superman',
+          studio: { 
+            _id: expect.any(String),
+            name: 'Miramax'
+          },
+          released: 1996,
+          cast: [{ 
+            role: 'Superman', 
+            actor: {
+              _id: expect.any(String),
+              name: 'Jim'
+            }, 
+            reviews: [{
+              _id: expect.any(String),
+              rating: review.rating,
+              review: review.review,
+              reviewer: {
+                _id: expect.any(String),
+                name: expect.any(String)
+              }
+            }], 
+            _id: expect.any(String)
+          }]
+        });       
       });
   });
 
